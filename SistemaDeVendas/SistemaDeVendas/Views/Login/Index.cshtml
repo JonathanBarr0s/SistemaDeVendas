@@ -38,15 +38,21 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">Login</h1>
 									</div>
+
+									<!-- Mensagens de validação -->
+									<div asp-validation-summary="All" class="text-danger"></div>
+
 									<form asp-controller="Login" asp-action="Login" method="post">
 										<div class="form-group">
 											<input type="email" class="form-control form-control-user"
 												   asp-for="Email" id="exampleInputEmail" aria-describedby="emailHelp"
 												   placeholder="Email">
+											<span asp-validation-for="Email" class="text-danger"></span>
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
 												   asp-for="Senha" id="exampleInputPassword" placeholder="Senha">
+											<span asp-validation-for="Senha" class="text-danger"></span>
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
@@ -56,8 +62,9 @@
 												</label>
 											</div>
 										</div>
-										<button type="submit" class="btn btn-primary btn-user btn-block" placeholder="Entrar">Entrar</button>
+										<button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button>
 									</form>
+
 									<hr>
 									<div class="text-center">
 										<a class="small" href="forgot-password.html">Esqueceu a senha?</a>
@@ -86,6 +93,10 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="/js/sb-admin-2.min.js"></script>
+
+	<!-- Scripts de validação -->
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 </body>
 
