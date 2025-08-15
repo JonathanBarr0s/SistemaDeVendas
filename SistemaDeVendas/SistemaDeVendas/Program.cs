@@ -35,6 +35,8 @@ app.UseAuthorization();
 
 app.UseSession();
 
+app.UseMiddleware<AutenticacaoMiddleware>();
+
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=login}/{action=Index}/{id?}");
