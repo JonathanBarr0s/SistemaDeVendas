@@ -12,7 +12,7 @@ public class AutenticacaoMiddleware
 
 	public async Task InvokeAsync(HttpContext context)
 	{
-		var caminhosPermitidos = new[] { "/Login", "/Login/Index", "/Login/Login" };
+		var caminhosPermitidos = new[] { "/Login", "/Login/Index", "/Login/Login", "/Register" };
 
 		var caminhoAtual = context.Request.Path.Value;
 
