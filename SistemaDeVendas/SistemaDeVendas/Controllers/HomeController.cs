@@ -15,11 +15,10 @@ namespace SistemaDeVendas.Controllers
         
         public IActionResult Index()
         {
-            return View();
-        }
+            ViewBag.MensagemBoasVindas = HttpContext.Session.GetString("Mensagem");
 
-        public IActionResult Privacy()
-        {
+            ViewBag.NomeVendedor = HttpContext.Session.GetString("VendedorNome");
+
             return View();
         }
 

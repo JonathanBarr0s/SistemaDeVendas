@@ -20,6 +20,14 @@ namespace SistemaDeVendas.Controllers
 			return View();
 		}
 
+		public IActionResult Logout()
+		{
+			HttpContext.Session.Clear();
+
+			return RedirectToAction("Index", "Login");
+		}
+
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(LoginModel login)
@@ -36,7 +44,9 @@ namespace SistemaDeVendas.Controllers
 			{
 				HttpContext.Session.SetString("VendedorNome", vendedor.Nome);
 
-				return RedirectToAction("Index", "Home");
+                HttpContext.Session.SetString("Mensagem", $"Seja bem-vindo, {vendedor.Nome}!");
+
+                return RedirectToAction("Index", "Home");
 			} else
 			{
 				ModelState.AddModelError("", "E-mail ou senha inválidos.");
