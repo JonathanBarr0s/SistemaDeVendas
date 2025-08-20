@@ -15,8 +15,14 @@ namespace SistemaDeVendas.Controllers
 
         public IActionResult Index()
         {
-			var clientes = _context.Cliente.OrderBy(cliente => cliente.Nome).ToList();
-			return View(clientes);
+            var clientes = _context.Cliente.OrderBy(cliente => cliente.Nome).ToList();
+            return View(clientes);
         }
+
+        public IActionResult NovoCliente()
+        {
+            return View();
+        }
+
     }
 }
