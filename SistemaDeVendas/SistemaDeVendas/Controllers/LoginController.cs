@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using SistemaDeVendas.Context;
+using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 
 namespace SistemaDeVendas.Controllers
@@ -37,7 +37,7 @@ namespace SistemaDeVendas.Controllers
 				return View("Index", login);
 			}
 
-			var vendedor = _context.Vendedors
+			var vendedor = _context.Vendedor
 				.FirstOrDefault(v => v.Email == login.Email && v.Senha == login.Senha);
 
 			if (vendedor != null)

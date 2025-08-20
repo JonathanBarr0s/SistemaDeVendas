@@ -1,4 +1,4 @@
-namespace SistemaDeVendas.Models
+﻿namespace SistemaDeVendas.Models
 {
     public class ErrorViewModel
     {
