@@ -1,1 +1,38 @@
-﻿<h1>Adicionar Cliente</h1>
+﻿@model SistemaDeVendas.Models.ClienteModel
+
+<h1 class="mb-4">Cadastro de Clientes</h1>
+
+<br />
+
+<div class="container mt-4">
+
+	@using (Html.BeginForm("RegistrarNovoCliente", "Cliente", FormMethod.Post, new { @class = "needs-validation" }))
+	{
+		<div class="form-group mb-3">
+			Nome:
+			@Html.TextBoxFor(m => m.Nome, new { @class = "form-control", placeholder = "Digite o nome" })
+			@Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group mb-3">
+			CPF ou CNPJ:
+			@Html.TextBoxFor(m => m.CPF_CNPJ, new { @class = "form-control", placeholder = "Digite o cpf ou cnpj" })
+			@Html.ValidationMessageFor(m => m.CPF_CNPJ, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group mb-3">
+			E-mail:
+			@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Digite o e-mail" })
+			@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group mb-3">
+			Senha:
+			@Html.TextBoxFor(m => m.Senha, new { @class = "form-control", placeholder = "Digite a senha" })
+			@Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+		</div>
+
+		<button type="submit" class="btn btn-primary">Salvar</button>
+		<a href="@Url.Action("Index", "Cliente")" class="btn btn-secondary">Cancelar</a>
+	}
+</div>

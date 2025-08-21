@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaDeVendas.Data;
+using SistemaDeVendas.Models;
 
 namespace SistemaDeVendas.Controllers
 {
@@ -19,10 +20,25 @@ namespace SistemaDeVendas.Controllers
             return View(clientes);
         }
 
+        [HttpGet]
         public IActionResult NovoCliente()
         {
             return View();
         }
+        
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RegistrarNovoCliente(ClienteModel cliente)
+        {
+			if (ModelState.IsValid)
+			{
+				_context.Cliente.Add(cliente);
+				_context.SaveChanges();        
 
+				return RedirectToAction("Index");
+			}			
+			return View("NovoCliente", cliente);
+		}
     }
 }
