@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System.Threading.Tasks;
 
 public class AutenticacaoMiddleware
@@ -12,16 +13,16 @@ public class AutenticacaoMiddleware
 
 	public async Task InvokeAsync(HttpContext context)
 	{
-		var caminhosPermitidos = new[] { "/Login", "/Login/Index", "/Login/Login", "/Register" };
+		var caminhosPermitidos = new[] { "/login", "/login/index", "/login/login", "/register" };
+		var caminhoAtual = context.Request.Path.Value.ToLower();
 
-		var caminhoAtual = context.Request.Path.Value;
-
-		if (!caminhosPermitidos.Contains(caminhoAtual) &&
+		if (!caminhosPermitidos.Any(c => caminhoAtual.StartsWith(c)) &&
 			string.IsNullOrEmpty(context.Session.GetString("VendedorNome")))
 		{
 			context.Response.Redirect("/Login");
 			return;
 		}
+
 		await _next(context);
 	}
 }

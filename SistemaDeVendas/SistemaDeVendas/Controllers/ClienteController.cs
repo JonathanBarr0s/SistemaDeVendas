@@ -25,9 +25,32 @@ namespace SistemaDeVendas.Controllers
         {
             return View();
         }
-        
-        
-        [HttpPost]
+
+		[HttpGet]
+		public IActionResult EditarCliente(int id)
+		{
+			var cliente = _context.Cliente.FirstOrDefault(c => c.Id == id);
+			if (cliente == null)
+			{
+				return NotFound();
+			}
+			return View(cliente);
+		}
+
+		[HttpPost]
+		public IActionResult EditarCliente(ClienteModel cliente)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Cliente.Update(cliente);
+				_context.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(cliente);
+		}
+
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RegistrarNovoCliente(ClienteModel cliente)
         {
@@ -40,5 +63,5 @@ namespace SistemaDeVendas.Controllers
 			}			
 			return View("NovoCliente", cliente);
 		}
-    }
+	}
 }

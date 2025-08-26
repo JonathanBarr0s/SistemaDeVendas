@@ -1,6 +1,6 @@
 ﻿@model SistemaDeVendas.Models.ClienteModel
 
-<h1 class="mb-4">Cadastro de Clientes</h1>
+<h3 class="mb-4">Cadastro de Clientes</h3>
 
 <br />
 
@@ -30,7 +30,7 @@
 			Senha:
 			@Html.TextBoxFor(m => m.Senha, new { @class = "form-control", placeholder = "Digite a senha" })
 			@Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
-		</div>
+		</div>		
 
 		<button type="submit" class="btn btn-primary">Salvar</button>
 		<a href="@Url.Action("Index", "Cliente")" class="btn btn-secondary">Cancelar</a>

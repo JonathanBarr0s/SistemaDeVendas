@@ -26,6 +26,7 @@
 							<th>CPF / CNPJ</th>
 							<th>Email</th>
 							<th>Senha</th>
+							<th style="width: 90px;">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -36,6 +37,14 @@
 								<td>@cliente.CPF_CNPJ</td>
 								<td>@cliente.Email</td>
 								<td>@cliente.Senha</td>
+								<td>
+									<a asp-action="EditarCliente" asp-controller="Cliente" asp-route-id="@cliente.Id" class="btn btn-warning btn-circle btn-sm">
+										<i class="fas fa-pencil-alt"></i>
+									</a>
+									<a href="#" class="btn btn-danger btn-circle btn-sm">
+										<i class="fas fa-trash"></i>
+									</a>
+								</td>
 							</tr>
 						}
 					</tbody>
