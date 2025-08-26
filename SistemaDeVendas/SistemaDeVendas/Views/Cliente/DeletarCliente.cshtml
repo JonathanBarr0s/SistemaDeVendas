@@ -1,0 +1,83 @@
+﻿@model SistemaDeVendas.Models.ClienteModel
+@{
+    Layout = "_Layout";
+}
+
+<h3 class="mb-4">Deletar Cliente</h3>
+
+<div class="container mt-4">
+    <form asp-action="DeletarCliente" asp-controller="Cliente" method="post" class="needs-validation">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Nome" />
+        <input type="hidden" asp-for="CPF_CNPJ" />
+        <input type="hidden" asp-for="Email" />
+        <input type="hidden" asp-for="Senha" />
+
+        <div class="row mb-2">
+            <div class="col-1 font-weight-bold">Nome:</div>
+            <div class="col">@Model.Nome</div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-1 font-weight-bold">CPF/CNPJ:</div>
+            <div class="col">
+                
+                @{
+                    string doc = Model.CPF_CNPJ;
+                    string formatado = doc;
+
+                    if (!string.IsNullOrEmpty(doc))
+                    {
+                        if (doc.Length == 11)
+                        {
+                            formatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
+                        } else if (doc.Length == 14)
+                        {
+                            formatado = Convert.ToUInt64(doc).ToString(@"00\.000\.000\/0000\-00");
+                        }
+                    }
+                }
+                @formatado            
+            
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-1 font-weight-bold">Email:</div>
+            <div class="col">@Model.Email</div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-1 font-weight-bold">Senha:</div>
+            <div class="col">@Model.Senha</div>
+        </div>
+
+        <a asp-action="Index" asp-controller="Cliente" class="btn btn-secondary">Cancelar</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteClient">
+            Deletar
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tem certeza de que deseja excluir?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Ao clicar em <strong>Deletar</strong> essa ação não poderá ser desfeita.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

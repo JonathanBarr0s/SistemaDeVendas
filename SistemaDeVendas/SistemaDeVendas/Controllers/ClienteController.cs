@@ -1,30 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
+using System.IO.Pipes;
 
 namespace SistemaDeVendas.Controllers
 {
-    public class ClienteController : Controller
-    {
-        private readonly AppDbContext _context;
+	public class ClienteController : Controller
+	{
+		private readonly AppDbContext _context;
 
-        public ClienteController(AppDbContext context)
-        {
-            _context = context;
-        }
+		public ClienteController(AppDbContext context)
+		{
+			_context = context;
+		}
 
 
-        public IActionResult Index()
-        {
-            var clientes = _context.Cliente.OrderBy(cliente => cliente.Nome).ToList();
-            return View(clientes);
-        }
+		public IActionResult Index()
+		{
+			var clientes = _context.Cliente.OrderBy(cliente => cliente.Nome).ToList();
+			return View(clientes);
+		}
 
-        [HttpGet]
-        public IActionResult NovoCliente()
-        {
-            return View();
-        }
+		[HttpGet]
+		public IActionResult NovoCliente()
+		{
+			return View();
+		}
 
 		[HttpGet]
 		public IActionResult EditarCliente(int id)
@@ -33,6 +34,29 @@ namespace SistemaDeVendas.Controllers
 			if (cliente == null)
 			{
 				return NotFound();
+			}
+			return View(cliente);
+		}
+
+		[HttpGet]
+		public IActionResult DeletarCliente(int id)
+		{
+			var cliente = _context.Cliente.FirstOrDefault(c => c.Id == id);
+			if (cliente == null)
+			{
+				return NotFound();
+			}
+			return View(cliente);
+		}
+
+		[HttpPost]
+		public IActionResult DeletarCliente(ClienteModel cliente)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Cliente.Remove(cliente);
+				_context.SaveChanges();
+				return RedirectToAction("Index");
 			}
 			return View(cliente);
 		}
@@ -51,16 +75,16 @@ namespace SistemaDeVendas.Controllers
 
 
 		[HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RegistrarNovoCliente(ClienteModel cliente)
-        {
+		[ValidateAntiForgeryToken]
+		public IActionResult RegistrarNovoCliente(ClienteModel cliente)
+		{
 			if (ModelState.IsValid)
 			{
 				_context.Cliente.Add(cliente);
-				_context.SaveChanges();        
+				_context.SaveChanges();
 
 				return RedirectToAction("Index");
-			}			
+			}
 			return View("NovoCliente", cliente);
 		}
 	}
