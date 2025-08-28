@@ -1,4 +1,5 @@
-﻿using SistemaDeVendas.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 using System.Text.RegularExpressions;
 
@@ -16,13 +17,13 @@ namespace SistemaDeVendas.Services
 		public List<(string campo, string mensagem)> ValidarCliente(ClienteModel cliente, bool editarCliente)
 		{
 			var erros = new List<(string campo, string mensagem)>();
-			
+
 			cliente.CPF_CNPJ = Regex.Replace(cliente.CPF_CNPJ ?? "", @"\D", "");
 
 			if (editarCliente)
 			{
-				// busca os dados antigos do cliente
-				var dadosAntigos = _context.Cliente.FirstOrDefault(c => c.Id == cliente.Id);
+				// busca os dados antigos do cliente				
+				var dadosAntigos = _context.Cliente.AsNoTracking().FirstOrDefault(c => c.Id == cliente.Id);
 
 				if (dadosAntigos != null)
 				{

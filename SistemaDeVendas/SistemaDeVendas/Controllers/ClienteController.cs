@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 using SistemaDeVendas.Services;
@@ -33,6 +34,7 @@ namespace SistemaDeVendas.Controllers
 		public IActionResult EditarCliente(int id)
 		{
 			var cliente = _context.Cliente.FirstOrDefault(c => c.Id == id);
+
 			if (cliente == null)
 			{
 				return NotFound();
@@ -43,7 +45,8 @@ namespace SistemaDeVendas.Controllers
 		[HttpGet]
 		public IActionResult DeletarCliente(int id)
 		{
-			var cliente = _context.Cliente.FirstOrDefault(c => c.Id == id);
+			var cliente = _context.Cliente.AsNoTracking().FirstOrDefault(cliente => cliente.Id == id);
+
 			if (cliente == null)
 			{
 				return NotFound();
