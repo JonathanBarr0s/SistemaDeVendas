@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
+using SistemaDeVendas.Services;
 using System.IO.Pipes;
 
 namespace SistemaDeVendas.Controllers
@@ -8,12 +9,13 @@ namespace SistemaDeVendas.Controllers
 	public class ClienteController : Controller
 	{
 		private readonly AppDbContext _context;
+		private readonly ClienteService _clienteService;
 
-		public ClienteController(AppDbContext context)
+		public ClienteController(AppDbContext context, ClienteService clienteService)
 		{
 			_context = context;
+			_clienteService = clienteService;
 		}
-
 
 		public IActionResult Index()
 		{
@@ -62,15 +64,27 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult EditarCliente(ClienteModel cliente)
+		public IActionResult EditarCliente(ClienteModel dadosAtualizados)
 		{
 			if (ModelState.IsValid)
 			{
-				_context.Cliente.Update(cliente);
+				var erros = _clienteService.ValidarCliente(dadosAtualizados, true);
+
+				if (erros.Any())
+				{
+					foreach (var erro in erros)
+					{
+						ModelState.AddModelError(erro.campo, erro.mensagem);
+					}
+
+					return View("EditarCliente", dadosAtualizados);
+				}
+
+				_context.Cliente.Update(dadosAtualizados);
 				_context.SaveChanges();
 				return RedirectToAction("Index");
 			}
-			return View(cliente);
+			return View(dadosAtualizados);
 		}
 
 
@@ -80,11 +94,24 @@ namespace SistemaDeVendas.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				var erros = _clienteService.ValidarCliente(cliente, false);
+
+				if (erros.Any())
+				{
+					foreach (var erro in erros)
+					{
+						ModelState.AddModelError(erro.campo, erro.mensagem);
+					}
+
+					return View("NovoCliente", cliente);
+				}
+
 				_context.Cliente.Add(cliente);
 				_context.SaveChanges();
 
 				return RedirectToAction("Index");
 			}
+
 			return View("NovoCliente", cliente);
 		}
 	}

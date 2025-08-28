@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SistemaDeVendas.Data;
 using SistemaDeVendas;
+using SistemaDeVendas.Data;
+using SistemaDeVendas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddSession(options =>
 
 // Permite injeção de HttpContext em outros serviços
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ClienteService>();
 
 // Configura o banco de dados
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
