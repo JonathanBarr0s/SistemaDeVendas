@@ -1,23 +1,17 @@
-﻿@model SistemaDeVendas.Models.ClienteModel
+﻿@model SistemaDeVendas.Models.VendedorModel
 
-<h3 class="mb-4">Cadastro de Clientes</h3>
+<h3 class="mb-4">Cadastro de Vendedores</h3>
 
 <br />
 
 <div class="container mt-4">
 
-	@using (Html.BeginForm("RegistrarNovoCliente", "Cliente", FormMethod.Post, new { @class = "needs-validation" }))
+	@using (Html.BeginForm("RegistrarNovoVendedor", "Vendedor", FormMethod.Post, new { @class = "needs-validation" }))
 	{
 		<div class="form-group mb-3">
 			Nome:
 			@Html.TextBoxFor(m => m.Nome, new { @class = "form-control", placeholder = "Digite o nome" })
 			@Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-		</div>
-
-		<div class="form-group mb-3">
-			CPF ou CNPJ:
-			@Html.TextBoxFor(m => m.CPF_CNPJ, new { @class = "form-control", placeholder = "Digite o cpf ou cnpj" })
-			@Html.ValidationMessageFor(m => m.CPF_CNPJ, "", new { @class = "text-danger" })
 		</div>
 
 		<div class="form-group mb-3">
@@ -30,9 +24,9 @@
 			Senha:
 			@Html.TextBoxFor(m => m.Senha, new { @class = "form-control", placeholder = "Digite a senha" })
 			@Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
-		</div>		
+		</div>
 
-		<a href="@Url.Action("Index", "Cliente")" class="btn btn-secondary">Cancelar</a>
+		<a href="@Url.Action("Index", "Vendedor")" class="btn btn-secondary">Cancelar</a>
 		<button type="submit" class="btn btn-primary">Salvar</button>
 	}
 </div>
