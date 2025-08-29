@@ -25,7 +25,35 @@ namespace SistemaDeVendas.Controllers
 			return View();
 		}
 
+		public IActionResult DeletarVendedor(int id)
+		{
+			if (id != null)
+			{
+				var vendedor = _context.Vendedor.FirstOrDefault(v => v.Id == id);
+
+				return View(vendedor);
+			}
+
+			return View();
+		}
+
 		[HttpPost]
+
+		public IActionResult DeletarVendedor(VendedorModel vendedor)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Vendedor.Remove(vendedor);
+				_context.SaveChanges();
+
+				return RedirectToAction("Index");
+			}
+
+			return View("DeletarVendedor", vendedor);
+		}
+
+
+
 		public IActionResult RegistrarNovoVendedor(VendedorModel vendedor)
 		{
 			if (ModelState.IsValid)
