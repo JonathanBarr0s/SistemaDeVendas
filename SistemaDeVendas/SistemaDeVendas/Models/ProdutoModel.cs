@@ -9,10 +9,10 @@ namespace SistemaDeVendas.Models
 		public string Nome { get; set; }
 		public string Descricao { get; set; }
 		[Required(ErrorMessage ="O campo Preço Unitário é obrigatório.")]
-		public double PrecoUnitario { get; set; }
+		public double Preco_Unitario { get; set; }
 		[Required(ErrorMessage ="O campo Quantidade é obrigatório.")]
-		public double QuantidadeEstoque { get; set; }
-		public string UnidadeMedida { get; set; }
-		public string LinkFoto { get; set; }
+		public double Quantidade_Estoque { get; set; }
+		public string Unidade_Medida { get; set; }
+		public string Link_Foto { get; set; }
 	}
 }
