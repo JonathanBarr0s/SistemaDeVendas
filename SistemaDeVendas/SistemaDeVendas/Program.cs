@@ -19,6 +19,7 @@ builder.Services.AddSession(options =>
 // Permite injeção de HttpContext em outros serviços
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<VendedorService>();
 
 // Configura o banco de dados
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
