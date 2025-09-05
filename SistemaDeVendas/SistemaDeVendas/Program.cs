@@ -2,8 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Services;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Adiciona serviços MVC
 builder.Services.AddControllersWithViews();
