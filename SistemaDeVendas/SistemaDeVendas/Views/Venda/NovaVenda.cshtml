@@ -1,0 +1,149 @@
+﻿@{
+	var vendedores = ViewBag.Vendedores as List<SistemaDeVendas.Models.VendedorModel>;
+	var clientes = ViewBag.Clientes as List<SistemaDeVendas.Models.ClienteModel>;
+	var produtos = ViewBag.Produtos as List<SistemaDeVendas.Models.ProdutoModel>;
+}
+
+<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<h1 class="h3 mb-2 text-gray-800">Nova Venda</h1>
+	<p class="mb-4">Selecione abaixo o <b>Vendedor</b>, o <b>Cliente</b> e os <b>Produtos</b> para registrar a venda.</p>
+
+	<!-- Card -->
+	<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between align-items-center">
+			<h6 class="m-0 font-weight-bold text-primary">Cadastro de Venda</h6>
+		</div>
+
+		<div class="card-body">
+			<form asp-action="NovaVenda" asp-controller="Venda" method="post">
+				<!-- Vendedor -->
+				<div class="form-group mb-3">
+					<label for="Id_Vendedor">Vendedor</label>
+					<select id="Id_Vendedor" name="Id_Vendedor" class="form-control">
+						<option value="">-- Selecione um vendedor --</option>
+						@foreach (var vendedor in vendedores)
+						{
+							<option value="@vendedor.Id">@vendedor.Nome</option>
+						}
+					</select>
+				</div>
+
+				<!-- Cliente -->
+				<div class="form-group mb-3">
+					<label for="Id_Cliente">Cliente</label>
+					<select id="Id_Cliente" name="Id_Cliente" class="form-control">
+						<option value="">-- Selecione um cliente --</option>
+						@foreach (var cliente in clientes)
+						{
+							<option value="@cliente.Id">@cliente.Nome</option>
+						}
+					</select>
+				</div>
+
+				<!-- Produto -->
+				<div class="form-group mb-3">
+					<label for="produtoSelect">Adicionar Produto</label>
+					<select id="produtoSelect" class="form-control">
+						<option value="">-- Selecione um produto --</option>
+						@foreach (var produto in produtos)
+						{
+							<option value="@produto.Id" data-preco="@produto.Preco_Unitario">
+								@produto.Nome
+							</option>
+						}
+					</select>
+				</div>
+
+				<button type="button" id="btnAdicionar" class="btn btn-info mb-3">Adicionar Produto</button>
+
+				<br><br>
+
+				<!-- Produtos -->
+				<h5 class="mt-4">Produtos da Venda</h5>
+				<table class="table table-bordered" id="tabelaProdutos">
+					<thead>
+						<tr>
+							<th>Produto</th>
+							<th>Preço Unitário</th>
+							<th>Quantidade</th>
+							<th>Subtotal</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<!-- Total oculto -->
+				<input type="hidden" name="Total" id="TotalVendaInput" />
+
+				<h4>Total: R$ <span id="totalVenda">0,00</span></h4>
+
+				<br />
+
+				<button type="submit" class="btn btn-success">Salvar Venda</button>
+				<a asp-action="Index" asp-controller="Venda" class="btn btn-secondary">Cancelar</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		let totalVenda = 0;
+
+		document.getElementById("btnAdicionar").addEventListener("click", function () {
+			const select = document.getElementById("produtoSelect");
+			const produtoId = select.value;
+			const produtoNome = select.options[select.selectedIndex].text;
+			const precoUnitario = parseFloat(select.options[select.selectedIndex].getAttribute("data-preco"));
+
+			if (!produtoId) return;
+
+			const tabela = document.getElementById("tabelaProdutos").querySelector("tbody");
+
+			const row = document.createElement("tr");
+
+			row.innerHTML = `
+				<td>
+					<input type="hidden" name="ProdutosIds" value="${produtoId}" />
+					${produtoNome}
+				</td>
+				<td>R$ ${precoUnitario.toFixed(2)}</td>
+				<td>
+					<input type="number" name="Quantidades" class="form-control quantidade" value="1" min="1" style="width: 80px;" />
+				</td>
+				<td class="subtotal">R$ ${precoUnitario.toFixed(2)}</td>
+				<td><button type="button" class="btn btn-danger btn-sm remover">Remover</button></td>
+			`;
+
+			tabela.appendChild(row);
+
+			atualizarTotal();
+
+			row.querySelector(".quantidade").addEventListener("input", function () {
+				const qtd = parseInt(this.value);
+				const subtotalCell = row.querySelector(".subtotal");
+				const subtotal = qtd * precoUnitario;
+				subtotalCell.textContent = `R$ ${subtotal.toFixed(2)}`;
+				atualizarTotal();
+			});
+
+			row.querySelector(".remover").addEventListener("click", function () {
+				row.remove();
+				atualizarTotal();
+			});
+		});
+
+		function atualizarTotal() {
+			totalVenda = 0;
+			document.querySelectorAll("#tabelaProdutos tbody tr").forEach(row => {
+				const subtotalText = row.querySelector(".subtotal").textContent.replace("R$", "").trim();
+				totalVenda += parseFloat(subtotalText);
+			});
+			document.getElementById("totalVenda").textContent = totalVenda.toFixed(2);
+			document.getElementById("TotalVendaInput").value = totalVenda.toFixed(2); // 🔥 envia para backend
+		}
+	</script>
+}
