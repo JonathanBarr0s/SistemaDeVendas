@@ -23,19 +23,46 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult NovaVenda(VendaModel venda)
+		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, decimal[] Quantidades)
 		{
 			if (ModelState.IsValid)
-			{
+			{		
 				venda.Data = DateTime.Now;
-
+		
 				_context.Venda.Add(venda);
-				_context.SaveChanges();				
+				_context.SaveChanges(); 
+
+				for (int i = 0; i < ProdutosIds.Length; i++)
+				{
+					var produtoId = ProdutosIds[i];
+					var quantidade = Quantidades[i];
+
+					var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
+					if (produto == null)
+						continue;
+
+					var itemVenda = new ItensVendaModel
+					{
+						Id_Venda = venda.Id,
+						Id_Produto = produtoId,
+						Quantidade_Produto = quantidade,
+						Preco_Produto = produto.Preco_Unitario
+					};
+
+					_context.Itens_Venda.Add(itemVenda);
+				}
+
+				_context.SaveChanges();
 
 				return RedirectToAction("Index", "Home");
 			}
 
+			ViewBag.Vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
+			ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
+			ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+
 			return View(venda);
 		}
+
 	}
 }
