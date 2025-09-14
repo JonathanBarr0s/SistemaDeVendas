@@ -1,0 +1,72 @@
+﻿@{
+    var vendas = ViewBag.venda as List<SistemaDeVendas.Models.VendaModel>;
+    var clientes = ViewBag.clientes as List<SistemaDeVendas.Models.ClienteModel>;
+    var vendedores = ViewBag.vendedores as List<SistemaDeVendas.Models.VendedorModel>;
+
+    DateTime? dataInicio = ViewBag.DataInicio as DateTime?;
+    DateTime? dataFim = ViewBag.DataFim as DateTime?;
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Vendas</h1>
+    <p class="mb-4">
+        Lista de vendas realizadas. Use o filtro para pesquisar por período.
+    </p>
+
+    <!-- Filtro -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="dataInicio" class="mr-2">De:</label>
+                    <input type="date" id="dataInicio" name="dataInicio" value="@(dataInicio?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="dataFim" class="mr-2">Até:</label>
+                    <input type="date" id="dataFim" name="dataFim" value="@(dataFim?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
+                <a asp-action="Index" class="btn btn-secondary mb-2 ml-2">Limpar</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Histórico de Vendas</h6>
+            <a class="btn btn-primary" asp-controller="Venda" asp-action="NovaVenda">Adicionar</a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Vendedor</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var venda in vendas)
+                        {
+                            var cliente = clientes.FirstOrDefault(c => c.Id == venda.Id_Cliente);
+                            var vendedor = vendedores.FirstOrDefault(v => v.Id == venda.Id_Vendedor);
+
+                            <tr>
+                                <td>@venda.Data.ToString("dd/MM/yyyy")</td>
+                                <td>@(vendedor != null ? vendedor.Nome : "N/A")</td>
+                                <td>@(cliente != null ? cliente.Nome : "N/A")</td>
+                                <td>R$ @venda.Total</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
