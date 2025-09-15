@@ -13,6 +13,11 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
+		public IActionResult Grafico()
+		{
+			return View();
+		}
+
 		public IActionResult Index(DateTime? dataInicio, DateTime? dataFim)
 		{
 			var query = _context.Venda.AsQueryable();
@@ -29,13 +34,31 @@ namespace SistemaDeVendas.Controllers
 			ViewBag.venda = query.OrderBy(v => v.Data).ToList();
 			ViewBag.clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
 			ViewBag.vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
-
 			ViewBag.DataInicio = dataInicio;
 			ViewBag.DataFim = dataFim;
 
+			var vendasPorProduto = query
+				.Join(_context.Itens_Venda,
+					  v => v.Id,
+					  i => i.Id_Venda,
+					  (v, i) => new { i.Id_Produto, i.Quantidade_Produto })
+				.Join(_context.Produto,
+					  iv => iv.Id_Produto,
+					  p => p.Id,
+					  (iv, p) => new { p.Nome, iv.Quantidade_Produto })
+				.GroupBy(x => x.Nome)
+				.Select(g => new
+				{
+					Produto = g.Key,
+					Quantidade = g.Sum(x => x.Quantidade_Produto)
+				})
+				.ToList();
+
+			ViewBag.Produtos = vendasPorProduto.Select(x => x.Produto).ToList();
+			ViewBag.Quantidades = vendasPorProduto.Select(x => x.Quantidade).ToList();
+
 			return View();
 		}
-
 
 		public IActionResult NovaVenda()
 		{
