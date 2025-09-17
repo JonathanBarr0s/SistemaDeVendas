@@ -62,12 +62,18 @@ namespace SistemaDeVendas.Controllers
 
 		public IActionResult NovaVenda()
 		{
-			ViewBag.vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
+			var vendedorId = HttpContext.Session.GetInt32("VendedorId");
+			var vendedorNome = HttpContext.Session.GetString("VendedorNome");
+
+			ViewBag.VendedorLogadoId = vendedorId;
+			ViewBag.VendedorLogadoNome = vendedorNome;
+
 			ViewBag.clientes = _context.Cliente.OrderBy(v => v.Nome).ToList();
 			ViewBag.produtos = _context.Produto.OrderBy(v => v.Nome).ToList();
 
 			return View();
 		}
+
 
 		[HttpPost]
 		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, decimal[] Quantidades)

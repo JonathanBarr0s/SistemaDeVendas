@@ -2,6 +2,7 @@
 	var vendedores = ViewBag.Vendedores as List<SistemaDeVendas.Models.VendedorModel>;
 	var clientes = ViewBag.Clientes as List<SistemaDeVendas.Models.ClienteModel>;
 	var produtos = ViewBag.Produtos as List<SistemaDeVendas.Models.ProdutoModel>;
+	var vendedorLogado = ViewBag.VendedorLogado;
 }
 
 <div class="container-fluid">
@@ -20,14 +21,9 @@
 			<form asp-action="NovaVenda" asp-controller="Venda" method="post">
 				<!-- Vendedor -->
 				<div class="form-group mb-3">
-					<label for="Id_Vendedor">Vendedor</label>
-					<select id="Id_Vendedor" name="Id_Vendedor" class="form-control">
-						<option value="">-- Selecione um vendedor --</option>
-						@foreach (var vendedor in vendedores)
-						{
-							<option value="@vendedor.Id">@vendedor.Nome</option>
-						}
-					</select>
+					<label>Vendedor</label>
+					<p class="form-control-plaintext font-weight-bold">@ViewBag.VendedorLogadoNome</p>
+					<input type="hidden" name="Id_Vendedor" value="@ViewBag.VendedorLogadoId" />
 				</div>
 
 				<!-- Cliente -->
