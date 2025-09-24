@@ -44,9 +44,9 @@ namespace SistemaDeVendas.Controllers
 			{
 				HttpContext.Session.SetString("VendedorNome", vendedor.Nome);
 
-				HttpContext.Session.SetString("VendedorId", vendedor.Id.ToString());
+				HttpContext.Session.SetInt32("VendedorId", vendedor.Id);
 
-                HttpContext.Session.SetString("Mensagem", $"Seja bem-vindo, {vendedor.Nome}!");
+				HttpContext.Session.SetString("Mensagem", $"Seja bem-vindo, {vendedor.Nome}!");
 
                 return RedirectToAction("Index", "Home");
 			} else

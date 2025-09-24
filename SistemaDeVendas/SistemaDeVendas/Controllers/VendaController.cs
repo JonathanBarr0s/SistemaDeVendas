@@ -78,6 +78,21 @@ namespace SistemaDeVendas.Controllers
 		[HttpPost]
 		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, decimal[] Quantidades)
 		{
+			var vendedorId = HttpContext.Session.GetInt32("VendedorId");
+
+			if (!vendedorId.HasValue)
+			{
+				ModelState.AddModelError("", "Sessão expirada. Faça login novamente.");
+
+				ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
+				ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+				return View(venda);
+			}
+
+			venda.Id_Vendedor = vendedorId.Value;
+
+			ModelState.Remove(nameof(VendaModel.Id_Vendedor));
+
 			if (ModelState.IsValid)
 			{
 				venda.Data = DateTime.Now;
@@ -85,27 +100,29 @@ namespace SistemaDeVendas.Controllers
 				_context.Venda.Add(venda);
 				_context.SaveChanges();
 
-				for (int i = 0; i < ProdutosIds.Length; i++)
+				if (ProdutosIds != null && Quantidades != null)
 				{
-					var produtoId = ProdutosIds[i];
-					var quantidade = Quantidades[i];
-
-					var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
-					if (produto == null)
-						continue;
-
-					var itemVenda = new ItensVendaModel
+					for (int i = 0; i < ProdutosIds.Length; i++)
 					{
-						Id_Venda = venda.Id,
-						Id_Produto = produtoId,
-						Quantidade_Produto = quantidade,
-						Preco_Produto = produto.Preco_Unitario
-					};
+						var produtoId = ProdutosIds[i];
+						var quantidade = Quantidades[i];
 
-					_context.Itens_Venda.Add(itemVenda);
+						var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
+						if (produto == null)
+							continue;
+
+						var itemVenda = new ItensVendaModel
+						{
+							Id_Venda = venda.Id,
+							Id_Produto = produtoId,
+							Quantidade_Produto = quantidade,
+							Preco_Produto = produto.Preco_Unitario
+						};
+
+						_context.Itens_Venda.Add(itemVenda);
+					}
+					_context.SaveChanges();
 				}
-
-				_context.SaveChanges();
 
 				return RedirectToAction("Index", "Venda");
 			}
@@ -116,6 +133,5 @@ namespace SistemaDeVendas.Controllers
 
 			return View(venda);
 		}
-
 	}
 }

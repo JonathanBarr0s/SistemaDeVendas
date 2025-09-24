@@ -3,6 +3,7 @@
 	var clientes = ViewBag.Clientes as List<SistemaDeVendas.Models.ClienteModel>;
 	var produtos = ViewBag.Produtos as List<SistemaDeVendas.Models.ProdutoModel>;
 	var vendedorLogado = ViewBag.VendedorLogado;
+	@model SistemaDeVendas.Models.VendaModel
 }
 
 <div class="container-fluid">
@@ -23,7 +24,6 @@
 				<div class="form-group mb-3">
 					<label>Vendedor</label>
 					<p class="form-control-plaintext font-weight-bold">@ViewBag.VendedorLogadoNome</p>
-					<input type="hidden" name="Id_Vendedor" value="@ViewBag.VendedorLogadoId" />
 				</div>
 
 				<!-- Cliente -->
