@@ -80,7 +80,7 @@ Para rodar o projeto localmente:
 
 ---
 
-## 4. Telas e Funcionalidades
+## 4. Telas do Sistema
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720" alt="Tela de Login" width="900"/>
