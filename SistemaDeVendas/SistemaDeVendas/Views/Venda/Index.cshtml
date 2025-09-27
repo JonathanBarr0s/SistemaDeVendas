@@ -61,7 +61,7 @@
 								<td>@venda.Data.ToString("dd/MM/yyyy")</td>
 								<td>@(vendedor != null ? vendedor.Nome : "N/A")</td>
 								<td>@(cliente != null ? cliente.Nome : "N/A")</td>
-								<td>R$ @venda.Total</td>
+								<td>R$ @venda.Total.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))</td>
 							</tr>
 						}
 					</tbody>

@@ -5,9 +5,7 @@
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">Produtos</h1>
 	<p class="mb-4">
-		DataTables is a third party plugin that is used to generate the demo table below.
-		For more information about DataTables, please visit the <a target="_blank"
-																   href="https://datatables.net">official DataTables documentation</a>.
+		
 	</p>
 
 	<!-- DataTales Example -->
@@ -26,7 +24,6 @@
 							<th>Descricao</th>
 							<th>Preço</th>
 							<th>Estoque</th>
-							<th>Unidade de Medida</th>
 							<th>Foto</th>
 							<th style="width: 90px;">Ações</th>
 						</tr>
@@ -39,7 +36,6 @@
 								<td>@produto.Descricao</td>
 								<td>R$ @produto.Preco_Unitario</td>
 								<td>@produto.Quantidade_Estoque</td>
-								<td>@produto.Unidade_Medida</td>
 								<td>
 									@if (!string.IsNullOrEmpty(produto.Link_Foto))
 									{

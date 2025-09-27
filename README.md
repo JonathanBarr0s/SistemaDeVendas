@@ -83,6 +83,10 @@ Para rodar o projeto localmente:
 ## 4. Telas e Funcionalidades
 
 > * Tela de login de vendedor;
+
+![Tela de Login](https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720)
+
+
 > * Tela de cadastro de clientes;
 > * Registro de uma nova venda;
 > * Relatório/listagem de vendas.
