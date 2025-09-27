@@ -82,19 +82,29 @@ Para rodar o projeto localmente:
 
 ## 4. Telas e Funcionalidades
 
-> * Tela de login de vendedor;
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720" alt="Tela de Login" width="900"/>
   <br>
   <em>Tela de Login</em>
 </p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/352feeea-7c3b-420e-bc86-5a5b3cd7a300" alt="Tela de Vendas" width="900"/>
+  <br>
+  <em>Tela de Vendas</em>
+</p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/385c2d7c-6ac2-47b8-915b-3abf27fe57b2" alt="Tela de Nova Venda" width="900"/>
+  <br>
+  <em>Tela de Nova Venda</em>
+</p>
 
-> * Tela de cadastro de clientes;
-> * Registro de uma nova venda;
-> * Relatório/listagem de vendas.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e53871a5-4da9-4c12-a567-cc9b410ce951" alt="Tela de Produtos" width="900"/>
+  <br>
+  <em>Tela de Produtos</em>
+</p>
 
 ---
 
