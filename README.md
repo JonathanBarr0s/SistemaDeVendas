@@ -84,7 +84,12 @@ Para rodar o projeto localmente:
 
 > * Tela de login de vendedor;
 
-![Tela de Login](https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720" alt="Tela de Login" width="300"/>
+  <br>
+  <em>Tela de Login</em>
+</p>
+
 
 
 > * Tela de cadastro de clientes;
