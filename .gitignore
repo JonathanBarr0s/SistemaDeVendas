@@ -418,3 +418,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/SistemaDeVendas/SistemaDeVendas/appsettings.Development.json
