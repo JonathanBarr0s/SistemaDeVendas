@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaDeVendas.Models
 {
+	[Table("SistemaDeVendas_Produto")]
 	public class ProdutoModel
 	{
 		public int Id { get; set; }

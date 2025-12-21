@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaDeVendas.Models
 {
+	[Table("SistemaDeVendas_Cliente")]
 	public class ClienteModel : IValidatableObject
 	{
 		public int Id { get; set; }
