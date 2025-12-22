@@ -51,7 +51,7 @@ namespace SistemaDeVendas.Controllers
                 return RedirectToAction("Index", "Home");
 			} else
 			{
-				ModelState.AddModelError("", "E-mail ou senha inválidos.");
+				ModelState.AddModelError("Senha", "Email ou senha inválidos");
 				return View("Index", login);
 			}
 		}
