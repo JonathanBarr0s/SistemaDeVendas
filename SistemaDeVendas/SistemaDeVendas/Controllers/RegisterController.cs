@@ -22,15 +22,15 @@ namespace SistemaDeVendas.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult RegistrarNovoVendedor(VendedorModel vendedor)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
-				_context.Vendedor.Add(vendedor);
-				_context.SaveChanges();
-
-				return RedirectToAction("Index", "Login");
+				return View("Index", vendedor);
 			}
 
-			return View(vendedor);
+			_context.Vendedor.Add(vendedor);
+			_context.SaveChanges();
+
+			return RedirectToAction("Index", "Login");
 		}
 	}
 }
