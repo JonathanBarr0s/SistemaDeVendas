@@ -30,7 +30,7 @@ namespace SistemaDeVendas.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Login(LoginModel login)
+		public ActionResult Login(Login login)
 		{
 			if (!ModelState.IsValid)
 			{

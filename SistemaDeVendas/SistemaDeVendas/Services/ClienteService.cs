@@ -14,11 +14,11 @@ namespace SistemaDeVendas.Services
 			_context = context;
 		}
 
-		public List<(string campo, string mensagem)> ValidarCliente(ClienteModel cliente, bool editarCliente)
+		public List<(string campo, string mensagem)> ValidarCliente(Cliente cliente, bool editarCliente)
 		{
 			var erros = new List<(string campo, string mensagem)>();
 
-			cliente.CPF_CNPJ = Regex.Replace(cliente.CPF_CNPJ ?? "", @"\D", "");
+			cliente.CPF = Regex.Replace(cliente.CPF ?? "", @"\D", "");
 
 			if (editarCliente)
 			{
@@ -28,10 +28,10 @@ namespace SistemaDeVendas.Services
 				if (dadosAntigos != null)
 				{
 					// CPF diferente do antigo e já existe no banco
-					if (cliente.CPF_CNPJ != dadosAntigos.CPF_CNPJ &&
-						_context.Cliente.Any(c => c.CPF_CNPJ == cliente.CPF_CNPJ))
+					if (cliente.CPF != dadosAntigos.CPF &&
+						_context.Cliente.Any(c => c.CPF == cliente.CPF))
 					{
-						erros.Add(("CPF_CNPJ", "Já existe um cliente com esse CPF/CNPJ."));
+						erros.Add(("CPF", "Já existe um cliente com esse CPF."));
 					}
 
 					// Email diferente do antigo e já existe no banco
@@ -46,9 +46,9 @@ namespace SistemaDeVendas.Services
 			}
 
 			// se for um novo cliente ou não encontrou dados antigos
-			if (_context.Cliente.Any(c => c.CPF_CNPJ == cliente.CPF_CNPJ))
+			if (_context.Cliente.Any(c => c.CPF == cliente.CPF))
 			{
-				erros.Add(("CPF_CNPJ", "Já existe um cliente com esse CPF/CNPJ."));
+				erros.Add(("CPF", "Já existe um cliente com esse CPF."));
 			}
 
 			if (_context.Cliente.Any(c => c.Email == cliente.Email))

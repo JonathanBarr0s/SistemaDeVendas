@@ -50,7 +50,7 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult EditarVendedor(VendedorModel vendedor)
+		public IActionResult EditarVendedor(Vendedor vendedor)
 		{
 			if (ModelState.IsValid)
 			{
@@ -71,8 +71,9 @@ namespace SistemaDeVendas.Controllers
 
 			return View(vendedor);
 		}
-
-		public IActionResult DeletarVendedor(VendedorModel vendedor)
+		
+		[HttpPost]
+		public IActionResult DeletarVendedor(Vendedor vendedor)
 		{
 			if (ModelState.IsValid)
 			{
@@ -87,7 +88,7 @@ namespace SistemaDeVendas.Controllers
 
 
 
-		public IActionResult RegistrarNovoVendedor(VendedorModel vendedor)
+		public IActionResult RegistrarNovoVendedor(Vendedor vendedor)
 		{
 			if (ModelState.IsValid)
 			{

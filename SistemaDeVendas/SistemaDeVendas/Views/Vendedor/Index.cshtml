@@ -1,4 +1,4 @@
-﻿@model List<SistemaDeVendas.Models.VendedorModel>
+﻿@model List<SistemaDeVendas.Models.Vendedor>
 
 <div class="container-fluid">
 
@@ -24,7 +24,6 @@
 						<tr>
 							<th>Nome</th>
 							<th>Email</th>
-							<th>Senha</th>
 							<th style="width: 90px;">Ações</th>
 						</tr>
 					</thead>
@@ -32,9 +31,8 @@
 						@foreach (var vendedor in Model)
 						{
 							<tr>
-								<td>@vendedor.Nome</td>
+								<td>@vendedor.Nome @vendedor.Sobrenome</td>
 								<td>@vendedor.Email</td>
-								<td>@vendedor.Senha</td>
 								<td>
 									<a asp-action="EditarVendedor" asp-controller="Vendedor" asp-route-id="@vendedor.Id" class="btn btn-warning btn-circle btn-sm">
 										<i class="fas fa-pencil-alt"></i>

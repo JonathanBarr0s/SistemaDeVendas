@@ -2,7 +2,7 @@
 
 namespace SistemaDeVendas.Models
 {
-	public class LoginModel
+	public class Login
 	{
         public string? Email { get; set; }
 

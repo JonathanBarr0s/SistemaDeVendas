@@ -1,56 +1,67 @@
-﻿@model List<SistemaDeVendas.Models.ClienteModel>
+﻿@model List<SistemaDeVendas.Models.Cliente>
 
 <div class="container-fluid">
 
-	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Clientes</h1>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
 
     <br />
 
-	<!-- DataTales Example -->
-	<div class="card shadow mb-4">
-		<div class="card-header py-3 d-flex justify-content-between align-items-center">
-			<h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
-			<a class="btn btn-primary" asp-controller="Cliente" asp-action="NovoCliente">Adicionar</a>
-		</div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
+            <a class="btn btn-primary" asp-controller="Cliente" asp-action="NovoCliente">Adicionar</a>
+        </div>
 
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>CPF / CNPJ</th>
-							<th>Email</th>
-							<th>Senha</th>
-							<th style="width: 90px;">Ações</th>
-						</tr>
-					</thead>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>CPF</th>
+                            <th>Telefone</th>
+                            <th style="width: 90px;">Ações</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @foreach (var cliente in Model)
                         {
                             <tr>
-                                <td>@cliente.Nome</td>
+                                <td>@cliente.Nome @cliente.Sobrenome</td>
+                                <td>@cliente.Email</td>
                                 <td>
                                     @{
-                                        string doc = cliente.CPF_CNPJ;
-                                        string formatado = doc;
+                                        string doc = cliente.CPF;
+                                        string cpfFormatado = doc;
 
                                         if (!string.IsNullOrEmpty(doc))
                                         {
+                                            cpfFormatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
+                                        }
+                                    }
+                                    @cpfFormatado
+                                </td>
+                                <td>
+                                    @{
+                                        string tel = cliente.Telefone;
+                                        string telFormatado = tel;
+
+                                        if (!string.IsNullOrEmpty(tel))
+                                        {
                                             if (doc.Length == 11)
                                             {
-                                                formatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
-                                            } else if (doc.Length == 14)
+                                                telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 00000-0000");
+                                            } else if (doc.Length == 10)
                                             {
-                                                formatado = Convert.ToUInt64(doc).ToString(@"00\.000\.000\/0000\-00");
+                                                telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 0000-0000");
                                             }
                                         }
                                     }
-                                    @formatado
+                                    @telFormatado
                                 </td>
-                                <td>@cliente.Email</td>
-                                <td>@cliente.Senha</td>
                                 <td>
                                     <a asp-action="EditarCliente" asp-controller="Cliente" asp-route-id="@cliente.Id" class="btn btn-warning btn-circle btn-sm">
                                         <i class="fas fa-pencil-alt"></i>
@@ -64,7 +75,7 @@
                     </tbody>
 
                 </table>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>

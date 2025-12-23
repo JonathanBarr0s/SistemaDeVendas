@@ -7,9 +7,9 @@ namespace SistemaDeVendas.Migrations
     /// <inheritdoc />
     public partial class PopulateSistemaDeVendas_Produto : Migration
     {
-		/// <inheritdoc />
-		protected override void Up(MigrationBuilder migrationBuilder)
-		{
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
 			migrationBuilder.InsertData(
 				table: "SistemaDeVendas_Produto",
 				columns: new[]
@@ -36,8 +36,8 @@ namespace SistemaDeVendas.Migrations
 			);
 		}
 
-		/// <inheritdoc />
-		protected override void Down(MigrationBuilder migrationBuilder)
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
 
         }

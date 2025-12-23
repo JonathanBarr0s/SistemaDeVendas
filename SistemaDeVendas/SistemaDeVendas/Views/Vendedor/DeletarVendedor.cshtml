@@ -1,4 +1,4 @@
-﻿@model SistemaDeVendas.Models.VendedorModel
+﻿@model SistemaDeVendas.Models.Vendedor
 
 <h3 class="mb-4">Deletar Vendedor</h3>
 
@@ -8,7 +8,6 @@
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Nome" />
         <input type="hidden" asp-for="Email" />
-        <input type="hidden" asp-for="Senha" />
 
         <div class="row mb-2">
             <div class="col-1 font-weight-bold">Nome:</div>
@@ -18,11 +17,6 @@
         <div class="row mb-2">
             <div class="col-1 font-weight-bold">Email:</div>
             <div class="col">@Model.Email</div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col-1 font-weight-bold">Senha:</div>
-            <div class="col">@Model.Senha</div>
         </div>
 
         <a asp-action="Index" asp-controller="Vendedor" class="btn btn-secondary">Cancelar</a>

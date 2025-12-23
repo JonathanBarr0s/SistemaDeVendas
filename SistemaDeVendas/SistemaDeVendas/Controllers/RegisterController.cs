@@ -20,7 +20,7 @@ namespace SistemaDeVendas.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult RegistrarNovoVendedor(VendedorModel vendedor)
+		public IActionResult RegistrarNovoVendedor(Vendedor vendedor)
 		{
 			if (!ModelState.IsValid)
 			{

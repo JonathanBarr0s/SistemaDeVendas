@@ -3,9 +3,9 @@ using SistemaDeVendas.Models;
 
 namespace SistemaDeVendas.Services.Validators
 {
-	public class LoginModelValidator : AbstractValidator<LoginModel>
+	public class LoginValidator : AbstractValidator<Login>
 	{
-		public LoginModelValidator()
+		public LoginValidator()
 		{
 			RuleFor(x => x.Email)
 				.NotEmpty().WithMessage("O email é obrigatório.")

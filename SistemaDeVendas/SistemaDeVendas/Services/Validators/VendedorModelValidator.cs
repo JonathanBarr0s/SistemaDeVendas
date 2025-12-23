@@ -3,9 +3,9 @@ using SistemaDeVendas.Models;
 
 namespace SistemaDeVendas.Services.Validators
 {
-	public class VendedorModelValidator : AbstractValidator<VendedorModel>
+	public class VendedorValidator : AbstractValidator<Vendedor>
 	{
-		public VendedorModelValidator()
+		public VendedorValidator()
 		{
 			RuleFor(x => x.Nome)
 				.NotEmpty().WithMessage("O nome é obrigatório.")

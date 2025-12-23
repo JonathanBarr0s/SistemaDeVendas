@@ -55,7 +55,7 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult DeletarCliente(ClienteModel cliente)
+		public IActionResult DeletarCliente(Cliente cliente)
 		{
 			if (ModelState.IsValid)
 			{
@@ -67,7 +67,7 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult EditarCliente(ClienteModel dadosAtualizados)
+		public IActionResult EditarCliente(Cliente dadosAtualizados)
 		{
 			if (ModelState.IsValid)
 			{
@@ -93,7 +93,7 @@ namespace SistemaDeVendas.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult RegistrarNovoCliente(ClienteModel cliente)
+		public IActionResult RegistrarNovoCliente(Cliente cliente)
 		{
 			if (ModelState.IsValid)
 			{

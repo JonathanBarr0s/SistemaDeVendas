@@ -15,7 +15,7 @@ namespace SistemaDeVendas.Services
 			_context = context;
 		}
 
-		public (string campo, string mensagem) ValidarVendedor(VendedorModel vendedor)
+		public (string campo, string mensagem) ValidarVendedor(Vendedor vendedor)
 		{
 			var dadosAntigos = _context.Vendedor
 				.AsNoTracking()

@@ -1,4 +1,4 @@
-﻿@model SistemaDeVendas.Models.ClienteModel
+﻿@model SistemaDeVendas.Models.Cliente
 @{
     Layout = "_Layout";
 }
@@ -10,37 +10,15 @@
 
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Nome" />
-        <input type="hidden" asp-for="CPF_CNPJ" />
+        <input type="hidden" asp-for="Sobrenome" />
         <input type="hidden" asp-for="Email" />
-        <input type="hidden" asp-for="Senha" />
+        <input type="hidden" asp-for="CPF" />
+        <input type="hidden" asp-for="Telefone" />
+
 
         <div class="row mb-2">
             <div class="col-1 font-weight-bold">Nome:</div>
-            <div class="col">@Model.Nome</div>
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-1 font-weight-bold">CPF/CNPJ:</div>
-            <div class="col">
-                
-                @{
-                    string doc = Model.CPF_CNPJ;
-                    string formatado = doc;
-
-                    if (!string.IsNullOrEmpty(doc))
-                    {
-                        if (doc.Length == 11)
-                        {
-                            formatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
-                        } else if (doc.Length == 14)
-                        {
-                            formatado = Convert.ToUInt64(doc).ToString(@"00\.000\.000\/0000\-00");
-                        }
-                    }
-                }
-                @formatado            
-            
-            </div>
+            <div class="col">@Model.Nome @Model.Sobrenome</div>
         </div>
 
         <div class="row mb-2">
@@ -48,9 +26,45 @@
             <div class="col">@Model.Email</div>
         </div>
 
+        <div class="row mb-2">
+            <div class="col-1 font-weight-bold">CPF:</div>
+            <div class="col">
+
+                @{
+                    string doc = Model.CPF;
+                    string cpfFormatado = doc;
+
+                    if (!string.IsNullOrEmpty(doc))
+                    {
+                        cpfFormatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
+                    }
+                }
+                @cpfFormatado
+
+            </div>
+        </div>
+
         <div class="row mb-4">
-            <div class="col-1 font-weight-bold">Senha:</div>
-            <div class="col">@Model.Senha</div>
+            <div class="col-1 font-weight-bold">Telefone:</div>
+            <div class="col">
+
+                @{
+                    string tel = Model.Telefone;
+                    string telFormatado = tel;
+
+                    if (!string.IsNullOrEmpty(tel))
+                    {
+                        if (doc.Length == 11)
+                        {
+                            telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 00000-0000");
+                        } else if (doc.Length == 10)
+                        {
+                            telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 0000-0000");
+                        }
+                    }
+                }
+                @telFormatado
+            </div>
         </div>
 
         <a asp-action="Index" asp-controller="Cliente" class="btn btn-secondary">Cancelar</a>

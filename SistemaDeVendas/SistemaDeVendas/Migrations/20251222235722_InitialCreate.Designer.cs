@@ -12,7 +12,7 @@ using SistemaDeVendas.Data;
 namespace SistemaDeVendas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251221225412_InitialCreate")]
+    [Migration("20251222235722_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace SistemaDeVendas.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SistemaDeVendas.Models.ClienteModel", b =>
+            modelBuilder.Entity("SistemaDeVendas.Models.Cliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,20 +33,19 @@ namespace SistemaDeVendas.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CPF_CNPJ")
-                        .IsRequired()
+                    b.Property<string>("CPF")
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Senha")
-                        .IsRequired()
+                    b.Property<string>("Sobrenome")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Telefone")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -130,7 +129,7 @@ namespace SistemaDeVendas.Migrations
                     b.ToTable("SistemaDeVendas_Venda");
                 });
 
-            modelBuilder.Entity("SistemaDeVendas.Models.VendedorModel", b =>
+            modelBuilder.Entity("SistemaDeVendas.Models.Vendedor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,15 +138,15 @@ namespace SistemaDeVendas.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Senha")
-                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sobrenome")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

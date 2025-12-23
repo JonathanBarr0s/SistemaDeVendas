@@ -1,4 +1,4 @@
-﻿@model SistemaDeVendas.Models.VendedorModel
+﻿@model SistemaDeVendas.Models.Vendedor
 
 <h3 class="mb-4">Cadastro de Vendedores</h3>
 
@@ -12,6 +12,12 @@
 			Nome:
 			@Html.TextBoxFor(m => m.Nome, new { @class = "form-control", placeholder = "Digite o nome" })
 			@Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group mb-3">
+			Sobrenome:
+			@Html.TextBoxFor(m => m.Sobrenome, new { @class = "form-control", placeholder = "Digite o sobrenome" })
+			@Html.ValidationMessageFor(m => m.Sobrenome, "", new { @class = "text-danger" })
 		</div>
 
 		<div class="form-group mb-3">

@@ -18,10 +18,11 @@ namespace SistemaDeVendas.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: false),
-                    CPF_CNPJ = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Senha = table.Column<string>(type: "text", nullable: false)
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Sobrenome = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    CPF = table.Column<string>(type: "text", nullable: true),
+                    Telefone = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,9 +83,10 @@ namespace SistemaDeVendas.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Senha = table.Column<string>(type: "text", nullable: false)
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Sobrenome = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Senha = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
