@@ -47,7 +47,7 @@
 								<td>@produto.Nome</td>
 								<td>@produto.Descricao</td>
 								<td>@produto.Quantidade_Estoque</td>								
-								<td>R$ @produto.Preco_Unitario</td>
+								<td>R$ @produto.Preco_Unitario?.ToString("C2")</td>
 								<td>
 									<a asp-action="EditarProduto" asp-controller="Produto" asp-route-id="@produto.Id" class="btn btn-warning btn-circle btn-sm">
 										<i class="fas fa-pencil-alt"></i>
