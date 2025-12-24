@@ -76,7 +76,7 @@ namespace SistemaDeVendas.Controllers
 
 
 		[HttpPost]
-		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, decimal[] Quantidades)
+		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, int[] Quantidades)
 		{
 			var vendedorId = HttpContext.Session.GetInt32("VendedorId");
 
@@ -116,7 +116,7 @@ namespace SistemaDeVendas.Controllers
 							Id_Venda = venda.Id,
 							Id_Produto = produtoId,
 							Quantidade_Produto = quantidade,
-							Preco_Produto = produto.Preco_Unitario
+							Preco_Produto = (decimal)produto.Preco_Unitario
 						};
 
 						_context.Itens_Venda.Add(itemVenda);

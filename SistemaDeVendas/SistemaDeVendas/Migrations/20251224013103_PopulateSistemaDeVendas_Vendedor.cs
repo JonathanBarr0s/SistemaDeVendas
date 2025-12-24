@@ -11,10 +11,10 @@ namespace SistemaDeVendas.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 			migrationBuilder.InsertData(
-			   table: "SistemaDeVendas_Vendedor",
-			   columns: new[] { "Nome", "Sobrenome", "Email", "Senha" },
-			   values: new object[,]
-			   {
+				table: "SistemaDeVendas_Vendedor",
+				columns: new[] { "Nome", "Sobrenome", "Email", "Senha" },
+				values: new object[,]
+				{
 					{ "Carlos", "Silva", "carlos.silva@loja.com", "123456" },
 					{ "Mariana", "Souza", "mariana.souza@loja.com", "senha123" },
 					{ "Rafael", "Oliveira", "rafael.oliveira@loja.com", "eduardo123" },
@@ -25,8 +25,8 @@ namespace SistemaDeVendas.Migrations
 					{ "Patricia", "Gomes", "patricia.gomes@loja.com", "luciana123" },
 					{ "Daniel", "Ribeiro", "daniel.ribeiro@loja.com", "bruno123" },
 					{ "Jonathan", "Barros", "jonathan@email.com", "123456" }
-			   }
-		   );
+				}
+			);
 		}
 
         /// <inheritdoc />

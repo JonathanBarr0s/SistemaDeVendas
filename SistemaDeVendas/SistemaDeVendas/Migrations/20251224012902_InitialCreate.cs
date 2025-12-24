@@ -49,11 +49,10 @@ namespace SistemaDeVendas.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: true),
                     Descricao = table.Column<string>(type: "text", nullable: true),
-                    Preco_Unitario = table.Column<decimal>(type: "numeric", nullable: false),
-                    Quantidade_Estoque = table.Column<decimal>(type: "numeric", nullable: false),
-                    Unidade_Medida = table.Column<string>(type: "text", nullable: true),
+                    Preco_Unitario = table.Column<decimal>(type: "numeric", nullable: true),
+                    Quantidade_Estoque = table.Column<int>(type: "integer", nullable: true),
                     Link_Foto = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

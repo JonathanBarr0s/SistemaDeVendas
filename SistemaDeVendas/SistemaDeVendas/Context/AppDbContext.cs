@@ -12,7 +12,7 @@ namespace SistemaDeVendas.Data
 
 		public DbSet<Cliente> Cliente { get; set; }
 		public DbSet<Vendedor> Vendedor { get; set; }
-		public DbSet<ProdutoModel> Produto { get; set; }
+		public DbSet<Produto> Produto { get; set; }
 		public DbSet<VendaModel> Venda { get; set; }
 		public DbSet<ItensVendaModel> Itens_Venda { get; set; }
 

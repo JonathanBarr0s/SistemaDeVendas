@@ -12,8 +12,8 @@ using SistemaDeVendas.Data;
 namespace SistemaDeVendas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251223001152_PopulateSistemaDeVendas_Venda")]
-    partial class PopulateSistemaDeVendas_Venda
+    [Migration("20251224013103_PopulateSistemaDeVendas_Vendedor")]
+    partial class PopulateSistemaDeVendas_Vendedor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace SistemaDeVendas.Migrations
                     b.ToTable("SistemaDeVendas_ItensVenda");
                 });
 
-            modelBuilder.Entity("SistemaDeVendas.Models.ProdutoModel", b =>
+            modelBuilder.Entity("SistemaDeVendas.Models.Produto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,17 +87,13 @@ namespace SistemaDeVendas.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Preco_Unitario")
+                    b.Property<decimal?>("Preco_Unitario")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("Quantidade_Estoque")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Unidade_Medida")
-                        .HasColumnType("text");
+                    b.Property<int?>("Quantidade_Estoque")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

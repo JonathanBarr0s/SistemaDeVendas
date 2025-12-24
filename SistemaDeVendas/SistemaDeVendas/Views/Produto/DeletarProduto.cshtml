@@ -1,4 +1,4 @@
-﻿@model SistemaDeVendas.Models.ProdutoModel
+﻿@model SistemaDeVendas.Models.Produto
 @{
 	Layout = "_Layout";
 }
@@ -13,7 +13,6 @@
 		<input type="hidden" asp-for="Descricao" />
 		<input type="hidden" asp-for="Preco_Unitario" />
 		<input type="hidden" asp-for="Quantidade_Estoque" />
-		<input type="hidden" asp-for="Unidade_Medida" />
 		<input type="hidden" asp-for="Link_Foto" />
 
 		<div class="row mb-2">
@@ -34,11 +33,6 @@
 		<div class="row mb-2">
 			<div class="col-2 font-weight-bold">Estoque:</div>
 			<div class="col">@Model.Quantidade_Estoque</div>
-		</div>
-
-		<div class="row mb-2">
-			<div class="col-2 font-weight-bold">Unidade de Medida:</div>
-			<div class="col">@Model.Unidade_Medida</div>
 		</div>
 
 		<div class="row mb-5">

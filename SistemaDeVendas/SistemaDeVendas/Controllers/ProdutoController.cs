@@ -40,7 +40,7 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult DeletarProduto(ProdutoModel produto)
+		public IActionResult DeletarProduto(Produto produto)
 		{
 			if (ModelState.IsValid)
 			{
@@ -54,7 +54,7 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult EditarProduto(ProdutoModel produto)
+		public IActionResult EditarProduto(Produto produto)
 		{
 			if (ModelState.IsValid)
 			{
@@ -69,7 +69,7 @@ namespace SistemaDeVendas.Controllers
 
 
 		[HttpPost]
-		public IActionResult NovoProduto(ProdutoModel produto)
+		public IActionResult NovoProduto(Produto produto)
 		{
 			if (ModelState.IsValid)
 			{

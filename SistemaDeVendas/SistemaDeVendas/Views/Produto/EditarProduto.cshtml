@@ -1,4 +1,4 @@
-﻿@model SistemaDeVendas.Models.ProdutoModel
+﻿@model SistemaDeVendas.Models.Produto
 
 <h3 class="mb-4">Editar Produto</h3>
 
@@ -28,12 +28,6 @@
 			Quantidade Estoque:
 			@Html.TextBoxFor(m => m.Quantidade_Estoque, new { @class = "form-control", placeholder = "Digite a quantidade em estoque", id = "Quantidade_Estoque" })
 			@Html.ValidationMessageFor(m => m.Quantidade_Estoque, "", new { @class = "text-danger" })
-		</div>
-
-		<div class="form-group mb-3">
-			Unidade de Medida:
-			@Html.TextBoxFor(m => m.Unidade_Medida, new { @class = "form-control", placeholder = "Digite a unidade de medida", id = "Unidade_Medida" })
-			@Html.ValidationMessageFor(m => m.Unidade_Medida, "", new { @class = "text-danger" })
 		</div>
 
 		<div class="form-group mb-3">
