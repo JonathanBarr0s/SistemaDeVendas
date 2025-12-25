@@ -5,38 +5,76 @@
 <br />
 
 <div class="container mt-4">
-	@using (Html.BeginForm("EditarProduto", "Produto", FormMethod.Post, new { @class = "needs-validation" }))
-	{
-		<div class="form-group mb-3">
-			Nome:
-			@Html.TextBoxFor(m => m.Nome, new { @class = "form-control", placeholder = "Digite o nome" })
-			@Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-		</div>
+    @using (Html.BeginForm("EditarProduto", "Produto", FormMethod.Post, new { @class = "needs-validation" }))
+    {
+        <div class="form-group mb-3">
+            Nome:
+            @Html.TextBoxFor(m => m.Nome, new {
+            @class = "form-control",
+                placeholder = "Digite o nome"
+                })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
 
-		<div class="form-group mb-3">
-			Descrição:
-			@Html.TextBoxFor(m => m.Descricao, new { @class = "form-control", placeholder = "Digite a descrição" })
-		</div>
+    <div class="form-group mb-3">
+        Descrição:
+        @Html.TextBoxFor(m => m.Descricao, new {
+                @class = "form-control",
+                placeholder = "Digite a descrição",
+                })
+    </div>
 
-		<div class="form-group mb-3">
-			Preço Unitário:
-			@Html.TextBoxFor(m => m.Preco_Unitario, new { @class = "form-control", placeholder = "Digite o preço unitário", id = "Preco_Unitario" })
-			@Html.ValidationMessageFor(m => m.Preco_Unitario, "", new { @class = "text-danger" })
-		</div>
+    <div class="form-group mb-3">
+        Preço Unitário:
+        @Html.TextBoxFor(m => m.Preco_Unitario, new {
+                @class = "form-control",
+                placeholder = "0,00",
+                id = "Preco_Unitario",
+                autocomplete = "on"
+                })
+        @Html.ValidationMessageFor(m => m.Preco_Unitario, "", new { @class = "text-danger" })
+    </div>
 
-		<div class="form-group mb-3">
-			Quantidade Estoque:
-			@Html.TextBoxFor(m => m.Quantidade_Estoque, new { @class = "form-control", placeholder = "Digite a quantidade em estoque", id = "Quantidade_Estoque" })
-			@Html.ValidationMessageFor(m => m.Quantidade_Estoque, "", new { @class = "text-danger" })
-		</div>
+    <div class="form-group mb-3">
+        Quantidade em Estoque:
+        @Html.TextBoxFor(m => m.Quantidade_Estoque, new {
+                @class = "form-control",
+                placeholder = "Digite a quantidade",
+                id = "Quantidade_Estoque",
+                autocomplete = "off"
+                })
+        @Html.ValidationMessageFor(m => m.Quantidade_Estoque, "", new { @class = "text-danger" })
+    </div>
 
-		<div class="form-group mb-3">
-			Foto:
-			@Html.TextBoxFor(m => m.Link_Foto, new { @class = "form-control", placeholder = "Insira o link da imagem", id = "Link_Foto" })
-			@Html.ValidationMessageFor(m => m.Link_Foto, "", new { @class = "text-danger" })
-		</div>
+    <div class="form-group mb-3">
+        Foto (link):
+        @Html.TextBoxFor(m => m.Link_Foto, new {
+                @class = "form-control",
+                placeholder = "Insira o link da imagem"
+                })
+        @Html.ValidationMessageFor(m => m.Link_Foto, "", new { @class = "text-danger" })
+    </div>
 
-		<a href="@Url.Action("Index", "Produto")" class="btn btn-secondary">Cancelar</a>
-		<button type="submit" class="btn btn-primary">Salvar</button>
-	}
+    <a href="@Url.Action("Index", "Produto")" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+        }
 </div>
+
+@section Scripts {
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- jQuery Mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#Preco_Unitario').mask('#.##0,00', { reverse: true });
+
+            $('#Quantidade_Estoque').mask('000000', { reverse: true });
+
+        });
+    </script>
+}
