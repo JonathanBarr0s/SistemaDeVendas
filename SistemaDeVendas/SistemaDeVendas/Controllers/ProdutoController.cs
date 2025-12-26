@@ -13,11 +13,16 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(string? termo)
 		{
-			var produtos = _context.Produto.OrderBy(x => x.Nome).ToList();
+			var produtos = _context.Produto.AsQueryable();
 
-			return View(produtos);
+			if (!string.IsNullOrWhiteSpace(termo))
+			{
+				produtos = produtos.Where(p => p.Nome.Contains(termo));
+			}
+
+			return View(produtos.OrderBy(x => x.Nome).ToList());
 		}
 
 		public IActionResult NovoProduto()

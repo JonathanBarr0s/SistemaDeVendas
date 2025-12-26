@@ -5,6 +5,7 @@
 
 appsettings.Development.json
 Scripts/
+Bootstrap/
 
 # User-specific files
 *.rsuser
