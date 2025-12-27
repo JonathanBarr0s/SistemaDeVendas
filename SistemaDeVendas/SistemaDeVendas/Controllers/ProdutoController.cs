@@ -19,10 +19,16 @@ namespace SistemaDeVendas.Controllers
 
 			if (!string.IsNullOrWhiteSpace(termo))
 			{
-				produtos = produtos.Where(p => p.Nome.Contains(termo));
+				termo = termo.Trim();
+
+				produtos = produtos.Where(p =>
+					p.Nome != null &&
+					p.Nome.ToLower().Contains(termo.ToLower()));
 			}
 
-			return View(produtos.OrderBy(x => x.Nome).ToList());
+			return View(produtos
+				.OrderBy(p => p.Nome)
+				.ToList());
 		}
 
 		public IActionResult NovoProduto()
