@@ -33,7 +33,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-home"></i>
                     <span>Home</span>
                 </a>
             </li>
@@ -41,29 +41,33 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePessoas">
+                <a class="nav-link" asp-controller="Cliente" asp-action="Index">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Pessoas</span>
+                    <span>Clientes</span>
                 </a>
-                <div id="collapsePessoas" class="collapse">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Cliente">Clientes</a>
-                        <a class="collapse-item" href="Vendedor">Vendedores</a>
-                    </div>
-                </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServicos">
-                    <i class="fas fa-fw fa-box"></i>
-                    <span>Serviços</span>
+                <a class="nav-link" asp-controller="Vendedor" asp-action="Index">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Vendedores</span>
                 </a>
-                <div id="collapseServicos" class="collapse">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Produto">Produtos</a>
-                        <a class="collapse-item" asp-controller="Venda" asp-action="Index">Venda</a>
-                    </div>
-                </div>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Produto" asp-action="Index">
+                    <i class="fas fa-fw fa-cubes"></i>
+                    <span>Produtos</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Venda" asp-action="Index">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Venda</span>
+                </a>
             </li>
 
             <div class="text-center d-none d-md-inline">
