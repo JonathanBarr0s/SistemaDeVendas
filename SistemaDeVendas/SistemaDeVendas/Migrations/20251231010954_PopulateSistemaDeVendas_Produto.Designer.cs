@@ -12,8 +12,8 @@ using SistemaDeVendas.Data;
 namespace SistemaDeVendas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251224012902_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251231010954_PopulateSistemaDeVendas_Produto")]
+    partial class PopulateSistemaDeVendas_Produto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

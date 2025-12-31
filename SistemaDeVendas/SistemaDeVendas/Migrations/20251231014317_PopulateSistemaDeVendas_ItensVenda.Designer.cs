@@ -12,7 +12,7 @@ using SistemaDeVendas.Data;
 namespace SistemaDeVendas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251224013818_PopulateSistemaDeVendas_ItensVenda")]
+    [Migration("20251231014317_PopulateSistemaDeVendas_ItensVenda")]
     partial class PopulateSistemaDeVendas_ItensVenda
     {
         /// <inheritdoc />

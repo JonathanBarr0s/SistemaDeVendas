@@ -52,7 +52,7 @@
                     <thead>
                         <tr class="text-center">
                             <th class="col-fotos">Foto</th>
-                            <th>Nome</th>
+                            <th class="col-titulo">Nome</th>
                             <th class="col-descricao">Descrição</th>
                             <th class="col-estoque">Estoque</th>
                             <th>Preço</th>
@@ -63,7 +63,7 @@
                         @foreach (var produto in Model)
                         {
                             <tr>
-                                <td>
+                                <td class="foto-produto">
                                     @if (!string.IsNullOrEmpty(produto.Link_Foto))
                                     {
                                         <img src="@produto.Link_Foto"
@@ -148,4 +148,14 @@
         text-align: center;
         font-weight: bold;
     }
-</style>
+
+    .foto-produto {
+        vertical-align: center !important;
+        text-align: center;
+    }
+
+    .col-titulo{
+        width: 250px;
+    }
+
+    </style>

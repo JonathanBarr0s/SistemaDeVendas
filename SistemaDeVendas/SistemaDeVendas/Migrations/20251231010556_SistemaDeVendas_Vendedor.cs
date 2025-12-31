@@ -5,7 +5,7 @@
 namespace SistemaDeVendas.Migrations
 {
     /// <inheritdoc />
-    public partial class PopulateSistemaDeVendas_Vendedor : Migration
+    public partial class SistemaDeVendas_Vendedor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
