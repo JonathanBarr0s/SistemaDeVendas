@@ -13,29 +13,40 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
-		public IActionResult Index(string? termo, bool estoqueZero = false)
+		public IActionResult Index(string? termo, bool estoqueZero = false, int pagina = 1)
 		{
-			var produtos = _context.Produto.AsQueryable();
+			const int pageSize = 10;
+
+			var query = _context.Produto.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(termo))
 			{
 				termo = termo.Trim().ToLower();
-
-				produtos = produtos.Where(p =>
+				query = query.Where(p =>
 					p.Nome != null &&
 					p.Nome.ToLower().Contains(termo));
 			}
 
 			if (estoqueZero)
 			{
-				produtos = produtos.Where(p => p.Quantidade_Estoque == 0);
+				query = query.Where(p => p.Quantidade_Estoque == 0);
 			}
 
-			return View(produtos
-				.OrderBy(p => p.Nome)
-				.ToList());
-		}
+			var totalRegistros = query.Count();
 
+			ViewBag.PaginaAtual = pagina;
+			ViewBag.TotalPaginas = (int)Math.Ceiling(totalRegistros / (double)pageSize);
+			ViewBag.Termo = termo;
+			ViewBag.EstoqueZero = estoqueZero;
+
+			var produtos = query
+				.OrderBy(p => p.Nome)
+				.Skip((pagina - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			return View(produtos);
+		}
 
 		public IActionResult NovoProduto()
 		{

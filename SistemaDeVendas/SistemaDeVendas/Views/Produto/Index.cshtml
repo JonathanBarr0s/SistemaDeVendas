@@ -78,7 +78,7 @@
                                 <td class="foto-produto">
                                     @if (!string.IsNullOrEmpty(produto.Link_Foto))
                                     {
-                                        <img src="@produto.Link_Foto"
+                                        <img src="@Url.Content(produto.Link_Foto)"
                                              class="img-fluid rounded"
                                              style="max-width: 240px; max-height: 160px; object-fit: cover;"
                                              alt="Foto do produto" />
@@ -121,6 +121,43 @@
         </div>
     </div>
 </div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
+            <a class="page-link"
+               asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
+               asp-route-termo="@ViewBag.Termo"
+               asp-route-estoqueZero="@ViewBag.EstoqueZero">
+                Anterior
+            </a>
+        </li>
+
+        @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == ViewBag.PaginaAtual ? "active" : "")">
+                <a class="page-link"
+                   asp-route-pagina="@i"
+                   asp-route-termo="@ViewBag.Termo"
+                   asp-route-estoqueZero="@ViewBag.EstoqueZero">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(ViewBag.PaginaAtual == ViewBag.TotalPaginas ? "disabled" : "")">
+            <a class="page-link"
+               asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
+               asp-route-termo="@ViewBag.Termo"
+               asp-route-estoqueZero="@ViewBag.EstoqueZero">
+                Próxima
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
 
 <style>
     #dataTable tbody tr {
