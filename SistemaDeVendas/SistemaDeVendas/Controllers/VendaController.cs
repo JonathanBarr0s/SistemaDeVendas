@@ -13,30 +13,47 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
-		public IActionResult Grafico()
+		public IActionResult Index(DateTime? dataInicio, DateTime? dataFim, int pagina = 1)
 		{
-			return View();
-		}
+			const int pageSize = 10;
 
-		public IActionResult Index(DateTime? dataInicio, DateTime? dataFim)
-		{
 			var query = _context.Venda.AsQueryable();
 
+			// Filtro por data
 			if (dataInicio.HasValue)
-				query = query.Where(v => v.Data >= dataInicio.Value);
+			{
+				var inicioUtc = DateTime.SpecifyKind(dataInicio.Value, DateTimeKind.Utc);
+				query = query.Where(v => v.Data >= inicioUtc);
+			}
 
 			if (dataFim.HasValue)
 			{
-				var fim = dataFim.Value.AddDays(1);
-				query = query.Where(v => v.Data < fim);
+				var fimUtc = DateTime.SpecifyKind(dataFim.Value.AddDays(1), DateTimeKind.Utc);
+				query = query.Where(v => v.Data < fimUtc);
 			}
 
-			ViewBag.venda = query.OrderBy(v => v.Data).ToList();
+			int totalRegistros = query.Count();
+
+			var vendasPaginadas = query
+				.OrderBy(v => v.Data)
+				.Skip((pagina - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			// ViewBags principais
+			ViewBag.venda = vendasPaginadas;
 			ViewBag.clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
 			ViewBag.vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
+
+			// Filtros
 			ViewBag.DataInicio = dataInicio;
 			ViewBag.DataFim = dataFim;
 
+			// Paginação
+			ViewBag.PaginaAtual = pagina;
+			ViewBag.TotalPaginas = (int)Math.Ceiling(totalRegistros / (double)pageSize);
+
+			// Dados para gráfico (mantém usando a query filtrada, SEM paginação)
 			var vendasPorProduto = query
 				.Join(_context.Itens_Venda,
 					  v => v.Id,

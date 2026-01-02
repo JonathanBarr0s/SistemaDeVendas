@@ -1,117 +1,132 @@
 ﻿@{
-	var vendas = ViewBag.venda as List<SistemaDeVendas.Models.VendaModel>;
-	var clientes = ViewBag.clientes as List<SistemaDeVendas.Models.Cliente>;
-	var vendedores = ViewBag.vendedores as List<SistemaDeVendas.Models.Vendedor>;
+    var vendas = ViewBag.venda as List<SistemaDeVendas.Models.VendaModel>;
+    var clientes = ViewBag.clientes as List<SistemaDeVendas.Models.Cliente>;
+    var vendedores = ViewBag.vendedores as List<SistemaDeVendas.Models.Vendedor>;
 
-	DateTime? dataInicio = ViewBag.DataInicio as DateTime?;
-	DateTime? dataFim = ViewBag.DataFim as DateTime?;
+    DateTime? dataInicio = ViewBag.DataInicio as DateTime?;
+    DateTime? dataFim = ViewBag.DataFim as DateTime?;
 }
 
 <div class="container-fluid">
 
-	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Vendas</h1>
-	<p class="mb-4">
-		Lista de vendas realizadas. Use o filtro para pesquisar por período.
-	</p>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Vendas</h1>
+    <p class="mb-4">
+        Lista de vendas realizadas. Use o filtro para pesquisar por período.
+    </p>
 
-	<!-- Filtro -->
-	<div class="card shadow mb-4">
-		<div class="card-body">
-			<form asp-action="Index" method="get" class="form-inline">
-				<div class="form-group mb-2">
-					<label for="dataInicio" class="mr-2">De:</label>
-					<input type="date" id="dataInicio" name="dataInicio" value="@(dataInicio?.ToString("yyyy-MM-dd"))" class="form-control" />
-				</div>
-				<div class="form-group mx-sm-3 mb-2">
-					<label for="dataFim" class="mr-2">Até:</label>
-					<input type="date" id="dataFim" name="dataFim" value="@(dataFim?.ToString("yyyy-MM-dd"))" class="form-control" />
-				</div>
-				<button type="submit" class="btn btn-primary mb-2">Filtrar</button>
-				<a asp-action="Index" class="btn btn-secondary mb-2 ml-2">Limpar</a>
-			</form>
-		</div>
-	</div>
+    <!-- Filtro -->
+    <div class="card shadow mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center">
 
-	<!-- DataTales Example -->
-	<div class="card shadow mb-4">
-		<div class="card-header py-3 d-flex justify-content-between align-items-center">
-			<h6 class="m-0 font-weight-bold text-primary">Histórico de Vendas</h6>
-			<a class="btn btn-primary" asp-controller="Venda" asp-action="NovaVenda">Adicionar</a>
-		</div>
+            <form asp-action="Index" method="get" class="form-inline">
+                <div class="form-group mb-2">
+                    <label for="dataInicio" class="mr-2">De:</label>
+                    <input type="date" id="dataInicio" name="dataInicio" value="@(dataInicio?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="dataFim" class="mr-2">Até:</label>
+                    <input type="date" id="dataFim" name="dataFim" value="@(dataFim?.ToString("yyyy-MM-dd"))" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
+                <a asp-action="Index" class="btn btn-secondary mb-2 ml-2">Limpar</a>
+            </form>
 
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Vendedor</th>
-							<th>Cliente</th>
-							<th>Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var venda in vendas)
-						{
-							var cliente = clientes.FirstOrDefault(c => c.Id == venda.Id_Cliente);
-							var vendedor = vendedores.FirstOrDefault(v => v.Id == venda.Id_Vendedor);
+            <a class="btn btn-primary" asp-controller="Venda" asp-action="NovaVenda">Adicionar</a>
 
-							<tr>
-								<td>@venda.Data.ToString("dd/MM/yyyy")</td>
-								<td>@(vendedor != null ? vendedor.Nome : "N/A")</td>
-								<td>@(cliente != null ? cliente.Nome : "N/A")</td>
-								<td>R$ @venda.Total.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="col-data">Data</th>
+                            <th class="col-vendedor">Vendedor</th>
+                            <th class="col-cliente">Cliente</th>
+                            <th class="col-total">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var venda in vendas)
+                        {
+                            var cliente = clientes.FirstOrDefault(c => c.Id == venda.Id_Cliente);
+                            var vendedor = vendedores.FirstOrDefault(v => v.Id == venda.Id_Vendedor);
+
+                            <tr>
+                                <td>@venda.Data.ToString("dd/MM/yyyy")</td>
+                                <td>@(vendedor != null ? $"{vendedor.Nome} {vendedor.Sobrenome}" : "N/A")</td>
+                                <td>@(cliente != null ? $"{cliente.Nome} {cliente.Sobrenome}" : "N/A")</td>
+                                <td>R$ @venda.Total.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @if (ViewBag.TotalPaginas > 1)
+    {
+        <nav aria-label="Paginação de vendas">
+            <ul class="pagination justify-content-center">
+
+                <!-- Anterior -->
+                <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
+                       asp-route-dataInicio="@(dataInicio?.ToString("yyyy-MM-dd"))"
+                       asp-route-dataFim="@(dataFim?.ToString("yyyy-MM-dd"))">
+                        Anterior
+                    </a>
+                </li>
+
+                <!-- Páginas -->
+                @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == ViewBag.PaginaAtual ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pagina="@i"
+                           asp-route-dataInicio="@(dataInicio?.ToString("yyyy-MM-dd"))"
+                           asp-route-dataFim="@(dataFim?.ToString("yyyy-MM-dd"))">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <!-- Próxima -->
+                <li class="page-item @(ViewBag.PaginaAtual == ViewBag.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
+                       asp-route-dataInicio="@(dataInicio?.ToString("yyyy-MM-dd"))"
+                       asp-route-dataFim="@(dataFim?.ToString("yyyy-MM-dd"))">
+                        Próxima
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    }
+
+
 </div>
 
-<!-- Gráfico -->
-<div class="card shadow mb-4">
-	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Gráfico de Vendas por Produto</h6>
-	</div>
-	<div class="card-body d-flex justify-content-center">
-		<canvas id="graficoPizza" style="max-width:400px; max-height:400px;"></canvas>
-	</div>
-</div>
+<style>
+    .col-data {
+        width: 150px;
+    }
 
-@section Scripts {
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	@using System.Text.Json
+    .col-vendedor{
+        width: 500px;
+    }
 
-<script>
-	const ctx = document.getElementById('graficoPizza');
-
-							const data = {
-								labels: @Html.Raw(JsonSerializer.Serialize(ViewBag.Produtos)),
-								datasets: [{
-									data: @Html.Raw(JsonSerializer.Serialize(ViewBag.Quantidades)),
-									backgroundColor: [
-										'#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-										'#FF9F40', '#E7E9ED', '#44DE28', '#0358B6', '#D60000'
-									]
-								}]
-							};
-
-							const config = {
-								type: 'pie',
-								data: data,
-								options: {
-									responsive: true,
-									plugins: {
-										legend: {
-											position: 'bottom',
-										}
-									}
-								}
-							};
-
-							new Chart(ctx, config);
-	</script>
-}
+    .col-cliente {
+        width: 500px;
+    }
+</style>
