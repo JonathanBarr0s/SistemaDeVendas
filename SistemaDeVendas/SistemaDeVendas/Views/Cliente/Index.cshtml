@@ -7,109 +7,172 @@
 
     <br />
 
-    <!-- DataTales Example -->
+    <!-- Card de ações (MESMO PADRÃO DE PRODUTOS) -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
-            <a class="btn btn-primary" asp-controller="Cliente" asp-action="NovoCliente">Adicionar</a>
-        </div>
+        <div class="card-body d-flex justify-content-between align-items-center">
 
+            <!-- Barra de pesquisa -->
+            <form asp-controller="Cliente"
+                  asp-action="Index"
+                  method="get"
+                  class="form-inline w-50">
+
+                <div class="input-group w-100">
+
+                    <input type="text"
+                           name="termo"
+                           value="@ViewBag.Termo"
+                           class="form-control bg-light border-0"
+                           placeholder="Pesquisar por nome..." />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+
+            <!-- Botão adicionar -->
+            <a class="btn btn-primary"
+               asp-controller="Cliente"
+               asp-action="NovoCliente">
+                Adicionar
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Tabela -->
+    <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>CPF</th>
-                            <th>Telefone</th>
+                            <th class="col-nome">Nome</th>
+                            <th class="col-email">Email</th>
+                            <th class="col-cpf">CPF</th>
+                            <th class="col-telefone">Telefone</th>
                             <th style="width: 90px;">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var cliente in Model)
+                        @if (Model.Any())
                         {
-                            <tr>
-                                <td>@cliente.Nome @cliente.Sobrenome</td>
-                                <td>@cliente.Email</td>
-                                <td>
-                                    @{
-                                        string doc = cliente.CPF;
-                                        string cpfFormatado = doc;
+                            @foreach (var cliente in Model)
+                            {
+                                <tr>
+                                    <td>@cliente.Nome @cliente.Sobrenome</td>
+                                    <td>@cliente.Email</td>
 
-                                        if (!string.IsNullOrEmpty(doc))
-                                        {
-                                            cpfFormatado = Convert.ToUInt64(doc).ToString(@"000\.000\.000\-00");
-                                        }
-                                    }
-                                    @cpfFormatado
-                                </td>
-                                <td>
-                                    @{
-                                        string tel = cliente.Telefone;
-                                        string telFormatado = tel;
+                                    <!-- CPF -->
+                                    <td>
+                                        @{
+                                            string cpf = cliente.CPF;
+                                            string cpfFormatado = cpf;
 
-                                        if (!string.IsNullOrEmpty(tel))
-                                        {
-                                            if (doc.Length == 11)
+                                            if (!string.IsNullOrEmpty(cpf) && cpf.Length == 11)
                                             {
-                                                telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 00000-0000");
-                                            } else if (doc.Length == 10)
-                                            {
-                                                telFormatado = Convert.ToUInt64(tel).ToString(@"(00) 0000-0000");
+                                                cpfFormatado = Convert
+                                                .ToUInt64(cpf)
+                                                .ToString(@"000\.000\.000\-00");
                                             }
                                         }
-                                    }
-                                    @telFormatado
-                                </td>
-                                <td>
-                                    <a asp-action="EditarCliente" asp-controller="Cliente" asp-route-id="@cliente.Id" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                    <a asp-action="DeletarCliente" asp-controller="Cliente" asp-route-id="@cliente.Id" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                        @cpfFormatado
+                                    </td>
+
+                                    <!-- Telefone -->
+                                    <td>
+                                        @{
+                                            string tel = cliente.Telefone;
+                                            string telFormatado = tel;
+
+                                            if (!string.IsNullOrEmpty(tel))
+                                            {
+                                                if (tel.Length == 11)
+                                                {
+                                                    telFormatado = Convert
+                                                    .ToUInt64(tel)
+                                                    .ToString(@"(00) 00000-0000");
+                                                } else if (tel.Length == 10)
+                                                {
+                                                    telFormatado = Convert
+                                                    .ToUInt64(tel)
+                                                    .ToString(@"(00) 0000-0000");
+                                                }
+                                            }
+                                        }
+                                        @telFormatado
+                                    </td>
+
+                                    <!-- Ações -->
+                                    <td class="text-center">
+                                        <a asp-action="EditarCliente"
+                                           asp-controller="Cliente"
+                                           asp-route-id="@cliente.Id"
+                                           class="btn btn-warning btn-circle btn-sm">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+
+                                        <a asp-action="DeletarCliente"
+                                           asp-controller="Cliente"
+                                           asp-route-id="@cliente.Id"
+                                           class="btn btn-danger btn-circle btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        } else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    Nenhum cliente encontrado.
                                 </td>
                             </tr>
                         }
                     </tbody>
-
                 </table>
+
             </div>
         </div>
     </div>
 
+    <!-- Paginação -->
     @if (ViewBag.TotalPaginas > 1)
     {
         <nav aria-label="Paginação de clientes">
             <ul class="pagination justify-content-center">
 
-                <!-- Página anterior -->
                 <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
                     <a class="page-link"
                        asp-action="Index"
-                       asp-route-pagina="@(ViewBag.PaginaAtual - 1)">
+                       asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
+                       asp-route-termo="@ViewBag.Termo">
                         Anterior
                     </a>
                 </li>
 
-                <!-- Números das páginas -->
                 @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
                 {
                     <li class="page-item @(i == ViewBag.PaginaAtual ? "active" : "")">
                         <a class="page-link"
                            asp-action="Index"
-                           asp-route-pagina="@i">
+                           asp-route-pagina="@i"
+                           asp-route-termo="@ViewBag.Termo">
                             @i
                         </a>
                     </li>
                 }
 
-                <!-- Próxima página -->
                 <li class="page-item @(ViewBag.PaginaAtual == ViewBag.TotalPaginas ? "disabled" : "")">
                     <a class="page-link"
                        asp-action="Index"
-                       asp-route-pagina="@(ViewBag.PaginaAtual + 1)">
+                       asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
+                       asp-route-termo="@ViewBag.Termo">
                         Próxima
                     </a>
                 </li>
@@ -118,5 +181,23 @@
         </nav>
     }
 
-
 </div>
+
+<style>
+
+    .col-nome {
+        width: 300px;
+    }
+
+    .col-email{
+        width: 500px;
+    }
+
+    .col-cpf{
+        width: 150px;
+    }
+
+    .col-telefone {
+        width: 150px;
+    }
+</style>

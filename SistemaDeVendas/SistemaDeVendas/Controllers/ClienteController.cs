@@ -18,12 +18,20 @@ namespace SistemaDeVendas.Controllers
 			_clienteService = clienteService;
 		}
 
-		public IActionResult Index(int pagina = 1)
+		public IActionResult Index(string termo, int pagina = 1)
 		{
 			int itensPorPagina = 10;
 
-			var query = _context.Cliente
-				.OrderBy(c => c.Nome);
+			var query = _context.Cliente.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(termo))
+			{
+				query = query.Where(c =>
+					c.Nome.ToLower().Contains(termo) ||
+					c.Sobrenome.ToLower().Contains(termo));
+			}
+
+			query = query.OrderBy(c => c.Nome);
 
 			int totalItens = query.Count();
 
@@ -34,9 +42,11 @@ namespace SistemaDeVendas.Controllers
 
 			ViewBag.PaginaAtual = pagina;
 			ViewBag.TotalPaginas = (int)Math.Ceiling(totalItens / (double)itensPorPagina);
+			ViewBag.Termo = termo;
 
 			return View(clientes);
 		}
+
 
 		[HttpGet]
 		public IActionResult NovoCliente()
