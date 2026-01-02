@@ -13,23 +13,29 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
-		public IActionResult Index(string? termo)
+		public IActionResult Index(string? termo, bool estoqueZero = false)
 		{
 			var produtos = _context.Produto.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(termo))
 			{
-				termo = termo.Trim();
+				termo = termo.Trim().ToLower();
 
 				produtos = produtos.Where(p =>
 					p.Nome != null &&
-					p.Nome.ToLower().Contains(termo.ToLower()));
+					p.Nome.ToLower().Contains(termo));
+			}
+
+			if (estoqueZero)
+			{
+				produtos = produtos.Where(p => p.Quantidade_Estoque == 0);
 			}
 
 			return View(produtos
 				.OrderBy(p => p.Nome)
 				.ToList());
 		}
+
 
 		public IActionResult NovoProduto()
 		{

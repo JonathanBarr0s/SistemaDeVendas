@@ -14,22 +14,34 @@
             <form asp-controller="Produto"
                   asp-action="Index"
                   method="get"
-                  class="form-inline w-25">
+                  class="form-inline w-50">
 
                 <div class="input-group w-100">
+
                     <input type="text"
                            name="termo"
                            value="@Context.Request.Query["termo"]"
                            class="form-control bg-light border-0"
-                           placeholder="Pesquisar por título...">
+                           placeholder="Pesquisar por título..." />
 
+                    <!-- Botão pesquisar -->
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
+
+                    <!-- Botão estoque zero -->
+                    <a class="btn btn-primary ml-2"
+                       asp-controller="Produto"
+                       asp-action="Index"
+                       asp-route-estoqueZero="true">
+                        Sem Estoque
+                    </a>
+
                 </div>
             </form>
+
 
             <a class="btn btn-primary"
                asp-controller="Produto"
