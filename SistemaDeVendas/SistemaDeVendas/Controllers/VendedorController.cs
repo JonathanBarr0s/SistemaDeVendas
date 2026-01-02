@@ -18,11 +18,34 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(string termo, int pagina = 1)
 		{
-			var vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
+			const int pageSize = 10;
+
+			var query = _context.Vendedor.AsQueryable();
+
+			if (!string.IsNullOrEmpty(termo))
+			{
+				query = query.Where(v =>
+					v.Nome.ToLower().Contains(termo) ||
+					v.Sobrenome.ToLower().Contains(termo));
+			}
+
+			int totalRegistros = query.Count();
+
+			var vendedores = query
+				.OrderBy(v => v.Nome)
+				.Skip((pagina - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			ViewBag.PaginaAtual = pagina;
+			ViewBag.TotalPaginas = (int)Math.Ceiling(totalRegistros / (double)pageSize);
+			ViewBag.Termo = termo;
+
 			return View(vendedores);
 		}
+
 
 		public IActionResult NovoVendedor()
 		{
