@@ -18,9 +18,23 @@ namespace SistemaDeVendas.Controllers
 			_clienteService = clienteService;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(int pagina = 1)
 		{
-			var clientes = _context.Cliente.OrderBy(cliente => cliente.Nome).ToList();
+			int itensPorPagina = 10;
+
+			var query = _context.Cliente
+				.OrderBy(c => c.Nome);
+
+			int totalItens = query.Count();
+
+			var clientes = query
+				.Skip((pagina - 1) * itensPorPagina)
+				.Take(itensPorPagina)
+				.ToList();
+
+			ViewBag.PaginaAtual = pagina;
+			ViewBag.TotalPaginas = (int)Math.Ceiling(totalItens / (double)itensPorPagina);
+
 			return View(clientes);
 		}
 

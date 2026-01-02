@@ -24,7 +24,17 @@ namespace SistemaDeVendas.Migrations
 						{ "Rafael", "Almeida", "rafael.almeida@email.com", "78901234567", "11995678901" },
 						{ "Juliana", "Lima", "juliana.lima@email.com", "89012345678", "11996789012" },
 						{ "Bruno", "Martins", "bruno.martins@email.com", "90123456789", "11997890123" },
-						{ "Patricia", "Gomes", "patricia.gomes@email.com", "01234567890", "11998901234" }
+						{ "Patricia", "Gomes", "patricia.gomes@email.com", "01234567890", "11998901234" },
+						{ "Eduardo", "Ramos", "eduardo.ramos@email.com", "11223344556", "11999112233" },
+						{ "Camila", "Araujo", "camila.araujo@email.com", "22334455667", "11999223344" },
+						{ "Thiago", "Barbosa", "thiago.barbosa@email.com", "33445566778", "11999334455" },
+						{ "Renata", "Mendes", "renata.mendes@email.com", "44556677889", "11999445566" },
+						{ "Diego", "Teixeira", "diego.teixeira@email.com", "55667788990", "11999556677" },
+						{ "Vanessa", "Freitas", "vanessa.freitas@email.com", "66778899001", "11999667788" },
+						{ "André", "Nascimento", "andre.nascimento@email.com", "77889900112", "11999778899" },
+						{ "Bianca", "Farias", "bianca.farias@email.com", "88990011223", "11999889900" },
+						{ "Gustavo", "Pacheco", "gustavo.pacheco@email.com", "99001122334", "11999990011" },
+						{ "Larissa", "Moreira", "larissa.moreira@email.com", "10111213145", "11990001122" }
 				}
 			);
 		}

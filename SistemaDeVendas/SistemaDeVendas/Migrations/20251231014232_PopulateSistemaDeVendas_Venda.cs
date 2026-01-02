@@ -30,7 +30,17 @@ namespace SistemaDeVendas.Migrations
 					{ new DateTime(2025, 01, 16, 0, 0, 0, DateTimeKind.Utc), 1200.00m, 7, 7 },
 					{ new DateTime(2025, 01, 17, 0, 0, 0, DateTimeKind.Utc), 399.90m,  8, 8 },
 					{ new DateTime(2025, 01, 18, 0, 0, 0, DateTimeKind.Utc), 59.90m,   9, 9 },
-					{ new DateTime(2025, 01, 19, 0, 0, 0, DateTimeKind.Utc), 3500.00m, 10, 10 }
+					{ new DateTime(2025, 01, 19, 0, 0, 0, DateTimeKind.Utc), 3500.00m, 10, 10 },
+					{ new DateTime(2025, 01, 20, 0, 0, 0, DateTimeKind.Utc), 780.00m,   11, 11 },
+					{ new DateTime(2025, 01, 21, 0, 0, 0, DateTimeKind.Utc), 1299.90m,  12, 12 },
+					{ new DateTime(2025, 01, 22, 0, 0, 0, DateTimeKind.Utc), 249.99m,   13, 13 },
+					{ new DateTime(2025, 01, 23, 0, 0, 0, DateTimeKind.Utc), 980.00m,   14, 14 },
+					{ new DateTime(2025, 01, 24, 0, 0, 0, DateTimeKind.Utc), 159.90m,   15, 15 },
+					{ new DateTime(2025, 01, 25, 0, 0, 0, DateTimeKind.Utc), 2100.00m,  16, 16 },
+					{ new DateTime(2025, 01, 26, 0, 0, 0, DateTimeKind.Utc), 499.90m,   17, 17 },
+					{ new DateTime(2025, 01, 27, 0, 0, 0, DateTimeKind.Utc), 899.00m,   18, 18 },
+					{ new DateTime(2025, 01, 28, 0, 0, 0, DateTimeKind.Utc), 75.00m,    19, 19 },
+					{ new DateTime(2025, 01, 29, 0, 0, 0, DateTimeKind.Utc), 3100.00m,  20, 20 }
 				}
 			);
 		}
