@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 using SistemaDeVendas.Services;
@@ -108,8 +107,6 @@ namespace SistemaDeVendas.Controllers
 
 			return View("DeletarVendedor", vendedor);
 		}
-
-
 
 		public IActionResult RegistrarNovoVendedor(Vendedor vendedor)
 		{

@@ -2,7 +2,6 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Produtos</h1>
     <p class="mb-4">
 
@@ -24,14 +23,12 @@
                            class="form-control bg-light border-0"
                            placeholder="Pesquisar por título..." />
 
-                    <!-- Botão pesquisar -->
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
 
-                    <!-- Botão estoque zero -->
                     <a class="btn btn-primary ml-2"
                        asp-controller="Produto"
                        asp-action="Index"
@@ -42,7 +39,6 @@
                 </div>
             </form>
 
-
             <a class="btn btn-primary"
                asp-controller="Produto"
                asp-action="NovoProduto">
@@ -52,7 +48,6 @@
         </div>
     </div>
 
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
@@ -157,7 +152,7 @@
 
 <style>
     #dataTable tbody tr {
-        height: 180px; /* altura fixa da linha */
+        height: 180px; 
     }
 
     #dataTable tbody td {
@@ -202,5 +197,4 @@
     .col-titulo{
         width: 250px;
     }
-
     </style>

@@ -2,16 +2,13 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
 
     <br />
 
-    <!-- Card de ações (MESMO PADRÃO DE PRODUTOS) -->
     <div class="card shadow mb-4">
         <div class="card-body d-flex justify-content-between align-items-center">
 
-            <!-- Barra de pesquisa -->
             <form asp-controller="Cliente"
                   asp-action="Index"
                   method="get"
@@ -34,7 +31,6 @@
                 </div>
             </form>
 
-            <!-- Botão adicionar -->
             <a class="btn btn-primary"
                asp-controller="Cliente"
                asp-action="NovoCliente">
@@ -44,14 +40,13 @@
         </div>
     </div>
 
-    <!-- Tabela -->
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
 
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th class="col-nome">Nome</th>
                             <th class="col-email">Email</th>
                             <th class="col-cpf">CPF</th>
@@ -68,7 +63,6 @@
                                     <td>@cliente.Nome @cliente.Sobrenome</td>
                                     <td>@cliente.Email</td>
 
-                                    <!-- CPF -->
                                     <td>
                                         @{
                                             string cpf = cliente.CPF;
@@ -84,7 +78,6 @@
                                         @cpfFormatado
                                     </td>
 
-                                    <!-- Telefone -->
                                     <td>
                                         @{
                                             string tel = cliente.Telefone;
@@ -108,7 +101,6 @@
                                         @telFormatado
                                     </td>
 
-                                    <!-- Ações -->
                                     <td class="text-center">
                                         <a asp-action="EditarCliente"
                                            asp-controller="Cliente"
@@ -141,7 +133,6 @@
         </div>
     </div>
 
-    <!-- Paginação -->
     @if (ViewBag.TotalPaginas > 1)
     {
         <nav aria-label="Paginação de clientes">

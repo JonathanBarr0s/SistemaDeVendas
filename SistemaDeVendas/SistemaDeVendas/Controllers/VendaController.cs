@@ -19,7 +19,6 @@ namespace SistemaDeVendas.Controllers
 
 			var query = _context.Venda.AsQueryable();
 
-			// Filtro por data
 			if (dataInicio.HasValue)
 			{
 				var inicioUtc = DateTime.SpecifyKind(dataInicio.Value, DateTimeKind.Utc);
@@ -35,25 +34,21 @@ namespace SistemaDeVendas.Controllers
 			int totalRegistros = query.Count();
 
 			var vendasPaginadas = query
-				.OrderBy(v => v.Data)
+				.OrderByDescending(v => v.Data)
 				.Skip((pagina - 1) * pageSize)
 				.Take(pageSize)
 				.ToList();
 
-			// ViewBags principais
 			ViewBag.venda = vendasPaginadas;
 			ViewBag.clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
 			ViewBag.vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
 
-			// Filtros
 			ViewBag.DataInicio = dataInicio;
 			ViewBag.DataFim = dataFim;
 
-			// Paginação
 			ViewBag.PaginaAtual = pagina;
 			ViewBag.TotalPaginas = (int)Math.Ceiling(totalRegistros / (double)pageSize);
 
-			// Dados para gráfico (mantém usando a query filtrada, SEM paginação)
 			var vendasPorProduto = query
 				.Join(_context.Itens_Venda,
 					  v => v.Id,
@@ -91,7 +86,6 @@ namespace SistemaDeVendas.Controllers
 			return View();
 		}
 
-
 		[HttpPost]
 		public IActionResult NovaVenda(VendaModel venda, int[] ProdutosIds, int[] Quantidades)
 		{
@@ -107,48 +101,56 @@ namespace SistemaDeVendas.Controllers
 			}
 
 			venda.Id_Vendedor = vendedorId.Value;
-
 			ModelState.Remove(nameof(VendaModel.Id_Vendedor));
 
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
-				venda.Data = DateTime.Now;
-
-				_context.Venda.Add(venda);
-				_context.SaveChanges();
-
-				if (ProdutosIds != null && Quantidades != null)
-				{
-					for (int i = 0; i < ProdutosIds.Length; i++)
-					{
-						var produtoId = ProdutosIds[i];
-						var quantidade = Quantidades[i];
-
-						var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
-						if (produto == null)
-							continue;
-
-						var itemVenda = new ItensVendaModel
-						{
-							Id_Venda = venda.Id,
-							Id_Produto = produtoId,
-							Quantidade_Produto = quantidade,
-							Preco_Produto = (decimal)produto.Preco_Unitario
-						};
-
-						_context.Itens_Venda.Add(itemVenda);
-					}
-					_context.SaveChanges();
-				}
-
-				return RedirectToAction("Index", "Venda");
+				ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
+				ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+				return View(venda);
 			}
 
-			ViewBag.Vendedores = _context.Vendedor.OrderBy(v => v.Nome).ToList();
-			ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
-			ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+			venda.Data = DateTime.UtcNow;
 
-			return View(venda);
+			decimal totalVenda = 0;
+
+			_context.Venda.Add(venda);
+			_context.SaveChanges();
+
+			if (ProdutosIds != null && Quantidades != null)
+			{
+				for (int i = 0; i < ProdutosIds.Length; i++)
+				{
+					var produtoId = ProdutosIds[i];
+					var quantidade = Quantidades[i];
+
+					if (quantidade <= 0)
+						continue;
+
+					var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
+					if (produto == null)
+						continue;
+
+					var precoUnitario = produto.Preco_Unitario ?? 0;
+
+					totalVenda += precoUnitario * quantidade;
+
+					var itemVenda = new ItensVendaModel
+					{
+						Id_Venda = venda.Id,
+						Id_Produto = produtoId,
+						Quantidade_Produto = quantidade,
+						Preco_Produto = precoUnitario
+					};
+
+					_context.Itens_Venda.Add(itemVenda);
+				}
+			}
+
+			venda.Total = totalVenda;
+			_context.SaveChanges();
+
+			return RedirectToAction("Index", "Venda");
 		}
 	}
 }

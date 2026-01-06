@@ -9,13 +9,11 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Vendas</h1>
     <p class="mb-4">
         Lista de vendas realizadas. Use o filtro para pesquisar por período.
     </p>
 
-    <!-- Filtro -->
     <div class="card shadow mb-4">
         <div class="card-body d-flex justify-content-between align-items-center">
 
@@ -37,13 +35,12 @@
         </div>
     </div>
 
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th class="col-data">Data</th>
                             <th class="col-vendedor">Vendedor</th>
                             <th class="col-cliente">Cliente</th>
@@ -57,7 +54,7 @@
                             var vendedor = vendedores.FirstOrDefault(v => v.Id == venda.Id_Vendedor);
 
                             <tr>
-                                <td>@venda.Data.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center">@venda.Data.ToString("dd/MM/yyyy")</td>
                                 <td>@(vendedor != null ? $"{vendedor.Nome} {vendedor.Sobrenome}" : "N/A")</td>
                                 <td>@(cliente != null ? $"{cliente.Nome} {cliente.Sobrenome}" : "N/A")</td>
                                 <td>R$ @venda.Total.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))</td>
@@ -74,7 +71,6 @@
         <nav aria-label="Paginação de vendas">
             <ul class="pagination justify-content-center">
 
-                <!-- Anterior -->
                 <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
                     <a class="page-link"
                        asp-action="Index"
@@ -85,7 +81,6 @@
                     </a>
                 </li>
 
-                <!-- Páginas -->
                 @for (int i = 1; i <= ViewBag.TotalPaginas; i++)
                 {
                     <li class="page-item @(i == ViewBag.PaginaAtual ? "active" : "")">
@@ -99,7 +94,6 @@
                     </li>
                 }
 
-                <!-- Próxima -->
                 <li class="page-item @(ViewBag.PaginaAtual == ViewBag.TotalPaginas ? "disabled" : "")">
                     <a class="page-link"
                        asp-action="Index"

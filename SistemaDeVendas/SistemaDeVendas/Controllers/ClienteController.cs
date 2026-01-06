@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 using SistemaDeVendas.Services;
-using System.IO.Pipes;
 
 namespace SistemaDeVendas.Controllers
 {

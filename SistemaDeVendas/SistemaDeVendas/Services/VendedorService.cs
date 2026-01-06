@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
-using System.Text.RegularExpressions;
 
 namespace SistemaDeVendas.Services
 {

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Linq;
-using System.Threading.Tasks;
-
-public class AutenticacaoMiddleware
+﻿public class AutenticacaoMiddleware
 {
 	private readonly RequestDelegate _next;
 
