@@ -45,6 +45,7 @@
                             <th class="col-vendedor">Vendedor</th>
                             <th class="col-cliente">Cliente</th>
                             <th class="col-total">Total</th>
+                            <th class="col-detalhes text-center">Detalhes</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,14 @@
                                 <td>@(vendedor != null ? $"{vendedor.Nome} {vendedor.Sobrenome}" : "N/A")</td>
                                 <td>@(cliente != null ? $"{cliente.Nome} {cliente.Sobrenome}" : "N/A")</td>
                                 <td>R$ @venda.Total.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                                <td class="text-center">
+                                    <a asp-controller="Venda"
+                                       asp-action="Detalhes"
+                                       asp-route-id="@venda.Id"
+                                       class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>

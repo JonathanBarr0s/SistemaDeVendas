@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
+using static SistemaDeVendas.Models.VendaDetalhesViewModel;
 
 namespace SistemaDeVendas.Controllers
 {
@@ -70,6 +72,43 @@ namespace SistemaDeVendas.Controllers
 			ViewBag.Quantidades = vendasPorProduto.Select(x => x.Quantidade).ToList();
 
 			return View();
+		}
+
+		public IActionResult Detalhes(int id)
+		{
+			var venda = _context.Venda.FirstOrDefault(v => v.Id == id);
+			if (venda == null)
+				return NotFound();
+
+			var cliente = _context.Cliente
+				.FirstOrDefault(c => c.Id == venda.Id_Cliente);
+
+			var vendedor = _context.Vendedor
+				.FirstOrDefault(v => v.Id == venda.Id_Vendedor);
+
+			var itens = (
+				from iv in _context.Itens_Venda
+				join p in _context.Produto on iv.Id_Produto equals p.Id
+				where iv.Id_Venda == id
+				select new ItemVendaDetalhe
+				{
+					Produto = p.Nome,
+					Quantidade = iv.Quantidade_Produto,
+					PrecoUnitario = iv.Preco_Produto
+				}
+			).ToList();
+
+			var viewModel = new VendaDetalhesViewModel
+			{
+				VendaId = venda.Id,
+				Data = venda.Data,
+				Cliente = cliente != null ? $"{cliente.Nome} {cliente.Sobrenome}" : "N/A",
+				Vendedor = vendedor != null ? $"{vendedor.Nome} {vendedor.Sobrenome}" : "N/A",
+				Total = venda.Total,
+				Itens = itens
+			};
+
+			return View(viewModel);
 		}
 
 		public IActionResult NovaVenda()
@@ -150,7 +189,7 @@ namespace SistemaDeVendas.Controllers
 			venda.Total = totalVenda;
 			_context.SaveChanges();
 
-			return RedirectToAction("Index", "Venda");
+			return RedirectToAction("Index");
 		}
 	}
 }
