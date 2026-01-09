@@ -94,13 +94,14 @@
 
                                         <br />
 
-                                        <a asp-action="DeletarProduto"
-                                           asp-controller="Produto"
-                                           asp-route-id="@produto.Id"
-                                           class="btn btn-danger btn-sm w-100"
-                                           onclick="return confirm('Deseja realmente excluir este produto?');">
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm w-100"
+                                                data-toggle="modal"
+                                                data-target="#deleteProdutoModal"
+                                                data-id="@produto.Id"
+                                                data-nome="@produto.Nome">
                                             <i class="fas fa-trash"></i> Excluir
-                                        </a>
+                                        </button>
 
                                     </div>
                                 </td>
@@ -109,6 +110,47 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteProdutoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Tem certeza que deseja excluir o produto
+                <strong id="produtoNome"></strong>?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <form asp-controller="Produto"
+                      asp-action="DeletarProduto"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="id" id="produtoId" />
+
+                    <button type="submit" class="btn btn-danger">
+                        Excluir
+                    </button>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -149,10 +191,24 @@
     </ul>
 </nav>
 
+@section Scripts {
+    <script>
+        $('#deleteProdutoModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+
+            var produtoId = button.data('id');
+            var produtoNome = button.data('nome');
+
+            $('#produtoId').val(produtoId);
+            $('#produtoNome').text(produtoNome);
+        });
+    </script>
+}
+
 
 <style>
     #dataTable tbody tr {
-        height: 180px; 
+        height: 180px;
     }
 
     #dataTable tbody td {
@@ -194,7 +250,7 @@
         text-align: center;
     }
 
-    .col-titulo{
+    .col-titulo {
         width: 250px;
     }
-    </style>
+</style>

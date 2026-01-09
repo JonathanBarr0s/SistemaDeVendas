@@ -40,11 +40,11 @@ namespace SistemaDeVendas.Controllers
 
 			if (vendedor != null)
 			{
-				HttpContext.Session.SetString("VendedorNome", vendedor.Nome);
+				HttpContext.Session.SetString("VendedorNome", $"{vendedor.Nome} {vendedor.Sobrenome}");
 
 				HttpContext.Session.SetInt32("VendedorId", vendedor.Id);
 
-				HttpContext.Session.SetString("Mensagem", $"Seja bem-vindo, {vendedor.Nome}!");
+				HttpContext.Session.SetString("Mensagem", $"Seja bem-vindo, {vendedor.Nome} {vendedor.Sobrenome}!");
 
                 return RedirectToAction("Index", "Home");
 			} else

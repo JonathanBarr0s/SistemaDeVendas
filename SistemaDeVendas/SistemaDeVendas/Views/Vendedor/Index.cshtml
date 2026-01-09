@@ -68,12 +68,14 @@
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
 
-                                        <a asp-action="DeletarVendedor"
-                                           asp-controller="Vendedor"
-                                           asp-route-id="@vendedor.Id"
-                                           class="btn btn-danger btn-circle btn-sm">
+                                        <button type="button"
+                                                class="btn btn-danger btn-circle btn-sm"
+                                                data-toggle="modal"
+                                                data-target="#deleteVendedorModal"
+                                                data-id="@vendedor.Id"
+                                                data-nome="@vendedor.Nome @vendedor.Sobrenome">
                                             <i class="fas fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -133,8 +135,63 @@
 
 </div>
 
-<style>
+<!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+<div class="modal fade" id="deleteVendedorModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Tem certeza que deseja excluir o vendedor
+                <strong id="vendedorNome"></strong>?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <form asp-controller="Vendedor"
+                      asp-action="DeletarVendedor"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="Id" id="vendedorId" />
+
+                    <button type="submit" class="btn btn-danger">
+                        Excluir
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#deleteVendedorModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+
+            var id = button.data('id');
+            var nome = button.data('nome');
+
+            $('#vendedorId').val(id);
+            $('#vendedorNome').text(nome);
+        });
+    </script>
+}
+
+<style>
     .col-nome {
         width: 300px;
     }

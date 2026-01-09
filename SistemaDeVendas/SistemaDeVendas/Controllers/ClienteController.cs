@@ -65,18 +65,6 @@ namespace SistemaDeVendas.Controllers
 			return View(cliente);
 		}
 
-		[HttpGet]
-		public IActionResult DeletarCliente(int id)
-		{
-			var cliente = _context.Cliente.AsNoTracking().FirstOrDefault(cliente => cliente.Id == id);
-
-			if (cliente == null)
-			{
-				return NotFound();
-			}
-			return View(cliente);
-		}
-
 		[HttpPost]
 		public IActionResult DeletarCliente(Cliente cliente)
 		{

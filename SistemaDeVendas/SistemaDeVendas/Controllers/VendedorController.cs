@@ -93,19 +93,20 @@ namespace SistemaDeVendas.Controllers
 
 			return View(vendedor);
 		}
-		
+
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult DeletarVendedor(Vendedor vendedor)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Vendedor.Remove(vendedor);
-				_context.SaveChanges();
+			var vendedorDb = _context.Vendedor.Find(vendedor.Id);
 
-				return RedirectToAction("Index");
-			}
+			if (vendedorDb == null)
+				return NotFound();
 
-			return View("DeletarVendedor", vendedor);
+			_context.Vendedor.Remove(vendedorDb);
+			_context.SaveChanges();
+
+			return RedirectToAction(nameof(Index));
 		}
 
 		public IActionResult RegistrarNovoVendedor(Vendedor vendedor)

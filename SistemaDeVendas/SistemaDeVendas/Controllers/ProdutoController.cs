@@ -60,25 +60,19 @@ namespace SistemaDeVendas.Controllers
 			return View(produto);
 		}
 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult DeletarProduto(int id)
 		{
-			var produto = _context.Produto.FirstOrDefault(p => p.Id == id);
+			var produto = _context.Produto.Find(id);
 
-			return View(produto);
-		}
+			if (produto == null)
+				return NotFound();
 
-		[HttpPost]
-		public IActionResult DeletarProduto(Produto produto)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Produto.Remove(produto);
-				_context.SaveChanges();
+			_context.Produto.Remove(produto);
+			_context.SaveChanges();
 
-				return RedirectToAction("Index", "Produto");
-			}
-
-			return View(produto);
+			return RedirectToAction(nameof(Index));
 		}
 
 		[HttpPost]

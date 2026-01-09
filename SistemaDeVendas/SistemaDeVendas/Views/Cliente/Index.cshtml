@@ -109,12 +109,14 @@
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
 
-                                        <a asp-action="DeletarCliente"
-                                           asp-controller="Cliente"
-                                           asp-route-id="@cliente.Id"
-                                           class="btn btn-danger btn-circle btn-sm">
+                                        <button type="button"
+                                                class="btn btn-danger btn-circle btn-sm"
+                                                data-toggle="modal"
+                                                data-target="#deleteClienteModal"
+                                                data-id="@cliente.Id"
+                                                data-nome="@cliente.Nome @cliente.Sobrenome">
                                             <i class="fas fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -174,17 +176,71 @@
 
 </div>
 
-<style>
+<div class="modal fade" id="deleteClienteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Tem certeza que deseja excluir o cliente
+                <strong id="clienteNome"></strong>?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <form asp-controller="Cliente"
+                      asp-action="DeletarCliente"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="Id" id="clienteId" />
+
+                    <button type="submit" class="btn btn-danger">
+                        Excluir
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#deleteClienteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+
+            var id = button.data('id');
+            var nome = button.data('nome');
+
+            $('#clienteId').val(id);
+            $('#clienteNome').text(nome);
+        });
+    </script>
+}
+
+<style>
     .col-nome {
         width: 300px;
     }
 
-    .col-email{
+    .col-email {
         width: 500px;
     }
 
-    .col-cpf{
+    .col-cpf {
         width: 150px;
     }
 
