@@ -217,6 +217,43 @@
     </div>
 </div>
 
+@if (TempData["ErroCliente"] != null)
+{
+    <div class="modal fade show"
+         id="erroClienteModal"
+         tabindex="-1"
+         role="dialog"
+         style="display:block; background-color: rgba(0,0,0,0.5);">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Ação não permitida</h5>
+                    <button type="button"
+                            class="close"
+                            onclick="$('#erroClienteModal').hide();">
+                        <span>×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    @TempData["ErroCliente"]
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            onclick="$('#erroClienteModal').hide();">
+                        Fechar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
 @section Scripts {
     <script>
         $('#deleteClienteModal').on('show.bs.modal', function (event) {

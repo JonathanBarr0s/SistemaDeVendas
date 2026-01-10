@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SistemaDeVendas.Data;
 using SistemaDeVendas.Models;
 using SistemaDeVendas.Services;
@@ -16,7 +15,6 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 			_clienteService = clienteService;
 		}
-
 		public IActionResult Index(string termo, int pagina = 1)
 		{
 			int itensPorPagina = 10;
@@ -46,7 +44,6 @@ namespace SistemaDeVendas.Controllers
 			return View(clientes);
 		}
 
-
 		[HttpGet]
 		public IActionResult NovoCliente()
 		{
@@ -65,42 +62,64 @@ namespace SistemaDeVendas.Controllers
 			return View(cliente);
 		}
 
-		[HttpPost]
-		public IActionResult DeletarCliente(Cliente cliente)
+		private bool ClientePossuiVendas(int clienteId)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Cliente.Remove(cliente);
-				_context.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View(cliente);
+			return _context.Venda.Any(v => v.Id_Cliente == clienteId);
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeletarCliente(int id)
+		{
+			var cliente = _context.Cliente.Find(id);
+
+			if (cliente == null)
+				return RedirectToAction("Index");
+
+			if (ClientePossuiVendas(id))
+			{
+				TempData["ErroCliente"] =
+					"Este cliente possui vendas vinculadas e não pode ser excluído.";
+				return RedirectToAction("Index");
+			}
+
+			_context.Cliente.Remove(cliente);
+			_context.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult EditarCliente(Cliente dadosAtualizados)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
+				return View(dadosAtualizados);
+
+			if (ClientePossuiVendas(dadosAtualizados.Id))
 			{
-				var erros = _clienteService.ValidarCliente(dadosAtualizados, true);
-
-				if (erros.Any())
-				{
-					foreach (var erro in erros)
-					{
-						ModelState.AddModelError(erro.campo, erro.mensagem);
-					}
-
-					return View("EditarCliente", dadosAtualizados);
-				}
-
-				_context.Cliente.Update(dadosAtualizados);
-				_context.SaveChanges();
+				TempData["ErroCliente"] =
+					"Este cliente possui vendas vinculadas e não pode ser editado.";
 				return RedirectToAction("Index");
 			}
-			return View(dadosAtualizados);
-		}
 
+			var erros = _clienteService.ValidarCliente(dadosAtualizados, true);
+
+			if (erros.Any())
+			{
+				foreach (var erro in erros)
+				{
+					ModelState.AddModelError(erro.campo, erro.mensagem);
+				}
+
+				return View("EditarCliente", dadosAtualizados);
+			}
+
+			_context.Cliente.Update(dadosAtualizados);
+			_context.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]

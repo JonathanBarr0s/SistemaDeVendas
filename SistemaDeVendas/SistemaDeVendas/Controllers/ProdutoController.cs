@@ -13,6 +13,11 @@ namespace SistemaDeVendas.Controllers
 			_context = context;
 		}
 
+		private bool ProdutoPossuiVendas(int produtoId)
+		{
+			return _context.Itens_Venda.Any(iv => iv.Id_Produto == produtoId);
+		}
+
 		public IActionResult Index(string? termo, bool estoqueZero = false, int pagina = 1)
 		{
 			const int pageSize = 10;
@@ -67,7 +72,15 @@ namespace SistemaDeVendas.Controllers
 			var produto = _context.Produto.Find(id);
 
 			if (produto == null)
-				return NotFound();
+				return RedirectToAction("Index");
+
+			if (ProdutoPossuiVendas(id))
+			{
+				TempData["ErroProduto"] =
+					"Este produto possui vendas vinculadas e não pode ser excluído.";
+
+				return RedirectToAction("Index");
+			}
 
 			_context.Produto.Remove(produto);
 			_context.SaveChanges();
@@ -76,19 +89,25 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult EditarProduto(Produto produto)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Produto.Update(produto);
-				_context.SaveChanges();
+			if (!ModelState.IsValid)
+				return View("EditarProduto", produto);
 
-				return RedirectToAction("Index", "Produto");
+			if (ProdutoPossuiVendas(produto.Id))
+			{
+				TempData["ErroProduto"] =
+					"Este produto possui vendas vinculadas e não pode ser editado.";
+
+				return RedirectToAction("Index");
 			}
 
-			return View(produto);
-		}
+			_context.Produto.Update(produto);
+			_context.SaveChanges();
 
+			return RedirectToAction("Index", "Produto");
+		}
 
 		[HttpPost]
 		public IActionResult NovoProduto(Produto produto)
@@ -103,6 +122,5 @@ namespace SistemaDeVendas.Controllers
 
 			return View(produto);
 		}
-
 	}
 }

@@ -16,6 +16,12 @@ namespace SistemaDeVendas.Controllers
 			_vendedorService = vendedorService;
 		}
 
+		private bool VendedorPossuiVendas(int vendedorId)
+		{
+			return _context.Venda.Any(v => v.Id_Vendedor == vendedorId);
+		}
+
+
 		[HttpGet]
 		public IActionResult Index(string termo, int pagina = 1)
 		{
@@ -45,21 +51,8 @@ namespace SistemaDeVendas.Controllers
 			return View(vendedores);
 		}
 
-
 		public IActionResult NovoVendedor()
 		{
-			return View();
-		}
-
-		public IActionResult DeletarVendedor(int id)
-		{
-			if (id != null)
-			{
-				var vendedor = _context.Vendedor.FirstOrDefault(v => v.Id == id);
-
-				return View(vendedor);
-			}
-
 			return View();
 		}
 
@@ -72,41 +65,55 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult EditarVendedor(Vendedor vendedor)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
+				return View("EditarVendedor", vendedor);
+
+			if (VendedorPossuiVendas(vendedor.Id))
 			{
-				var erro = _vendedorService.ValidarVendedor(vendedor);
-
-				if (erro.campo != null && erro.mensagem != null)
-				{
-					ModelState.AddModelError(erro.campo, erro.mensagem);
-
-					return View("EditarVendedor", vendedor);
-				}
-
-				_context.Vendedor.Update(vendedor);
-				_context.SaveChanges();
+				TempData["ErroVendedor"] =
+					"Este vendedor possui vendas vinculadas e não pode ser editado.";
 
 				return RedirectToAction("Index", "Vendedor");
 			}
 
-			return View(vendedor);
+			var erro = _vendedorService.ValidarVendedor(vendedor);
+
+			if (erro.campo != null && erro.mensagem != null)
+			{
+				ModelState.AddModelError(erro.campo, erro.mensagem);
+				return View("EditarVendedor", vendedor);
+			}
+
+			_context.Vendedor.Update(vendedor);
+			_context.SaveChanges();
+
+			return RedirectToAction("Index", "Vendedor");
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult DeletarVendedor(Vendedor vendedor)
+		public IActionResult DeletarVendedor(int id)
 		{
-			var vendedorDb = _context.Vendedor.Find(vendedor.Id);
+			var vendedor = _context.Vendedor.Find(id);
 
-			if (vendedorDb == null)
-				return NotFound();
+			if (vendedor == null)
+				return RedirectToAction("Index");
 
-			_context.Vendedor.Remove(vendedorDb);
+			if (VendedorPossuiVendas(id))
+			{
+				TempData["ErroVendedor"] =
+					"Este vendedor possui vendas vinculadas e não pode ser excluído.";
+
+				return RedirectToAction("Index");
+			}
+
+			_context.Vendedor.Remove(vendedor);
 			_context.SaveChanges();
 
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction("Index");
 		}
 
 		public IActionResult RegistrarNovoVendedor(Vendedor vendedor)
