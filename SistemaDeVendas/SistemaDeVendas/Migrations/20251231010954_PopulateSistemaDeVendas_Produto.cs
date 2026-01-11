@@ -82,21 +82,21 @@ namespace SistemaDeVendas.Migrations
 						"Pendrive 64GB",
 						"Pendrive USB 3.0 de 64GB com alta velocidade de transferência e design compacto. Ideal para armazenamento e transporte de arquivos importantes, oferece praticidade, confiabilidade e compatibilidade com diversos dispositivos.",
 						59.90m,
-						40,
+						0,
 						"https://github.com/user-attachments/assets/68d947ee-73bf-4179-a699-5f36d29379eb"
 					},
 					{
 						"Cadeira Gamer",
 						"Cadeira gamer ergonômica desenvolvida para proporcionar conforto e postura adequada durante longos períodos de uso. Possui ajustes de altura, inclinação e apoio lombar, sendo ideal para jogos, estudos ou trabalho.",
 						1200.00m,
-						5,
+						0,
 						"https://github.com/user-attachments/assets/e6ec6715-65c8-4029-9bee-7e1e3f2f20d9"
 					},
 					{
 						"Webcam Full HD",
 						"Webcam Full HD com excelente qualidade de imagem, ideal para videoconferências, aulas online e transmissões ao vivo. Possui foco automático, microfone integrado e fácil instalação em notebooks e monitores.",
 						210.00m,
-						22,
+						0,
 						"https://github.com/user-attachments/assets/7edaff05-bc0a-4123-89a4-57f6f4d60e85"
 					},
 					{

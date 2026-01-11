@@ -34,7 +34,8 @@ namespace SistemaDeVendas.Migrations
 					{ "Gustavo", "Melo", "gustavo.melo@loja.com", "gustavo123" },
 					{ "Larissa", "Farias", "larissa.farias@loja.com", "larissa123" },
 					{ "Anderson", "Batista", "anderson.batista@loja.com", "anderson123" },
-					{ "Paula", "Freitas", "paula.freitas@loja.com", "paula123" }
+					{ "Paula", "Freitas", "paula.freitas@loja.com", "paula123" },
+					{ "Usuário", "Teste", "vendedor@loja.com", "@teste123" }
 				}
 			);
 		}

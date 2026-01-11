@@ -16,16 +16,16 @@ namespace SistemaDeVendas.Services.Validators
 				.MaximumLength(500).WithMessage("A descrição pode ter no máximo 500 caracteres.");
 
 			RuleFor(x => x.Preco_Unitario)
-				.NotNull().WithMessage("O preço unitário é obrigatório.")
-				.GreaterThan(0).WithMessage("O preço unitário deve ser maior que zero.")
-				.Must(p => decimal.Round((decimal)p, 2) == p).WithMessage("O preço unitário deve ter no máximo duas casas decimais.");
+				.NotNull().WithMessage("O preço é obrigatório.")
+				.GreaterThan(0).WithMessage("O preço deve ser maior que zero.")
+				.LessThanOrEqualTo(999999.99m)
+				.WithMessage("O preço informado é muito alto.");
 
 			RuleFor(x => x.Quantidade_Estoque)
 				.GreaterThanOrEqualTo(0)
 				.WithMessage("A quantidade em estoque não pode ser negativa.")
 				.NotNull().WithMessage("A quantidade em estoque é obrigatória.")
-				.LessThanOrEqualTo(1000).WithMessage("A quantidade em estoque excede o limite permitido de 1000.")
-				.Must(q => q % 1 == 0).WithMessage("A quantidade em estoque deve ser um número inteiro.");
+				.LessThanOrEqualTo(1000).WithMessage("A quantidade em estoque excede o limite permitido de 1000.");
 
 			RuleFor(x => x.Link_Foto)
 				.Must(link => string.IsNullOrWhiteSpace(link) || Uri.IsWellFormedUriString(link, UriKind.Absolute))

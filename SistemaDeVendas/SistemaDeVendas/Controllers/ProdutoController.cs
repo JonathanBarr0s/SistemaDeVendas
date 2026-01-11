@@ -110,13 +110,13 @@ namespace SistemaDeVendas.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult NovoProduto(Produto produto)
 		{
 			if (ModelState.IsValid)
 			{
 				_context.Produto.Add(produto);
 				_context.SaveChanges();
-
 				return RedirectToAction("Index", "Produto");
 			}
 

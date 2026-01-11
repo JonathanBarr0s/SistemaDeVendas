@@ -102,6 +102,14 @@ namespace SistemaDeVendas.Controllers
 			if (vendedor == null)
 				return RedirectToAction("Index");
 
+			if (vendedor.Email == "vendedor@loja.com")
+			{
+				TempData["ErroVendedor"] =
+					"Este vendedor é um usuário padrão do sistema e não pode ser excluído.";
+
+				return RedirectToAction("Index");
+			}
+
 			if (VendedorPossuiVendas(id))
 			{
 				TempData["ErroVendedor"] =
