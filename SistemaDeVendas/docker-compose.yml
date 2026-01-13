@@ -1,5 +1,6 @@
 services:
   sistema-de-vendas:
+    container_name: sistema_de_vendas
     image: jonathanbarr0s/sistema-de-vendas:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
