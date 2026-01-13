@@ -1,17 +1,32 @@
 ﻿@model SistemaDeVendas.Models.Produto
 
+@{
+    bool possuiVendas = ViewBag.PossuiVendas != null && (bool)ViewBag.PossuiVendas;
+}
+
 <h3 class="mb-4">Editar produto</h3>
 
 <br />
 
 <div class="container mt-4">
+
+    @if (possuiVendas)
+    {
+        <div class="alert alert-warning">
+            Este produto já possui vendas. Apenas o <strong>estoque</strong> pode ser alterado.
+        </div>
+    }
+
     @using (Html.BeginForm("EditarProduto", "Produto", FormMethod.Post, new { @class = "needs-validation" }))
     {
+        @Html.HiddenFor(m => m.Id)
+
         <div class="form-group mb-3">
             Nome:
             @Html.TextBoxFor(m => m.Nome, new {
             @class = "form-control",
-                placeholder = "Digite o nome"
+                placeholder = "Digite o nome",
+                @readonly = possuiVendas ? "readonly" : null
                 })
         @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
     </div>
@@ -21,6 +36,7 @@
         @Html.TextBoxFor(m => m.Descricao, new {
                 @class = "form-control",
                 placeholder = "Digite a descrição",
+                @readonly = possuiVendas ? "readonly" : null
                 })
     </div>
 
@@ -30,7 +46,8 @@
                 @class = "form-control",
                 placeholder = "0,00",
                 id = "Preco_Unitario",
-                autocomplete = "on"
+                autocomplete = "on",
+                @readonly = possuiVendas ? "readonly" : null
                 })
         @Html.ValidationMessageFor(m => m.Preco_Unitario, "", new { @class = "text-danger" })
     </div>
@@ -50,7 +67,8 @@
         Foto (link):
         @Html.TextBoxFor(m => m.Link_Foto, new {
                 @class = "form-control",
-                placeholder = "Insira o link da imagem"
+                placeholder = "Insira o link da imagem",
+                @readonly = possuiVendas ? "readonly" : null
                 })
         @Html.ValidationMessageFor(m => m.Link_Foto, "", new { @class = "text-danger" })
     </div>
@@ -62,16 +80,15 @@
 
 @section Scripts {
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <!-- jQuery Mask -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <script>
         $(document).ready(function () {
 
-            $('#Preco_Unitario').mask('#.##0,00', { reverse: true });
+            if (!$('#Preco_Unitario').prop('readonly')) {
+                $('#Preco_Unitario').mask('#.##0,00', { reverse: true });
+            }
 
             $('#Quantidade_Estoque').mask('000000', { reverse: true });
 

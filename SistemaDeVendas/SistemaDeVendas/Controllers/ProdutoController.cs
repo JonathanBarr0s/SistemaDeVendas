@@ -60,7 +60,12 @@ namespace SistemaDeVendas.Controllers
 
 		public IActionResult EditarProduto(int id)
 		{
-			var produto = _context.Produto.FirstOrDefault(x => x.Id == id);
+			var produto = _context.Produto.FirstOrDefault(p => p.Id == id);
+
+			if (produto == null)
+				return NotFound();
+
+			ViewBag.PossuiVendas = ProdutoPossuiVendas(id);
 
 			return View(produto);
 		}
@@ -93,17 +98,29 @@ namespace SistemaDeVendas.Controllers
 		public IActionResult EditarProduto(Produto produto)
 		{
 			if (!ModelState.IsValid)
-				return View("EditarProduto", produto);
+				return View(produto);
 
-			if (ProdutoPossuiVendas(produto.Id))
+			var produtoDb = _context.Produto.FirstOrDefault(p => p.Id == produto.Id);
+
+			if (produtoDb == null)
+				return NotFound();
+
+			bool possuiVendas = ProdutoPossuiVendas(produto.Id);
+
+			if (possuiVendas)
 			{
-				TempData["ErroProduto"] =
-					"Este produto possui vendas vinculadas e não pode ser editado.";
-
-				return RedirectToAction("Index");
+				// 🔒 Com vendas → só estoque
+				produtoDb.Quantidade_Estoque = produto.Quantidade_Estoque;
+			} else
+			{
+				// ✅ Sem vendas → tudo
+				produtoDb.Nome = produto.Nome;
+				produtoDb.Descricao = produto.Descricao;
+				produtoDb.Preco_Unitario = produto.Preco_Unitario;
+				produtoDb.Quantidade_Estoque = produto.Quantidade_Estoque;
+				produtoDb.Link_Foto = produto.Link_Foto;
 			}
 
-			_context.Produto.Update(produto);
 			_context.SaveChanges();
 
 			return RedirectToAction("Index", "Produto");
