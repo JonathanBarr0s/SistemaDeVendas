@@ -31,6 +31,9 @@ namespace SistemaDeVendas.Controllers
 
 			if (!string.IsNullOrEmpty(termo))
 			{
+
+				termo = termo.Trim().ToLower();
+
 				query = query.Where(v =>
 					v.Nome.ToLower().Contains(termo) ||
 					v.Sobrenome.ToLower().Contains(termo));

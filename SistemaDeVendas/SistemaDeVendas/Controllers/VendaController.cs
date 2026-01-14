@@ -133,9 +133,7 @@ namespace SistemaDeVendas.Controllers
 			if (!vendedorId.HasValue)
 			{
 				ModelState.AddModelError("", "Sessão expirada. Faça login novamente.");
-
-				ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
-				ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+				CarregarCombos();
 				return View(venda);
 			}
 
@@ -144,8 +142,14 @@ namespace SistemaDeVendas.Controllers
 
 			if (!ModelState.IsValid)
 			{
-				ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
-				ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
+				CarregarCombos();
+				return View(venda);
+			}
+
+			if (ProdutosIds == null || Quantidades == null || ProdutosIds.Length == 0)
+			{
+				ModelState.AddModelError("", "Adicione pelo menos um produto à venda.");
+				CarregarCombos();
 				return View(venda);
 			}
 
@@ -156,40 +160,60 @@ namespace SistemaDeVendas.Controllers
 			_context.Venda.Add(venda);
 			_context.SaveChanges();
 
-			if (ProdutosIds != null && Quantidades != null)
+			for (int i = 0; i < ProdutosIds.Length; i++)
 			{
-				for (int i = 0; i < ProdutosIds.Length; i++)
+				var produtoId = ProdutosIds[i];
+				var quantidade = Quantidades[i];
+
+				if (quantidade <= 0)
+					continue;
+
+				var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
+
+				if (produto == null)
+					continue;
+
+				if (produto.Quantidade_Estoque < quantidade)
 				{
-					var produtoId = ProdutosIds[i];
-					var quantidade = Quantidades[i];
+					ModelState.AddModelError("",
+						$"Estoque insuficiente para o produto '{produto.Nome}'. " +
+						$"Disponível: {produto.Quantidade_Estoque}");
 
-					if (quantidade <= 0)
-						continue;
+					_context.Venda.Remove(venda);
+					_context.SaveChanges();
 
-					var produto = _context.Produto.FirstOrDefault(p => p.Id == produtoId);
-					if (produto == null)
-						continue;
-
-					var precoUnitario = produto.Preco_Unitario ?? 0;
-
-					totalVenda += precoUnitario * quantidade;
-
-					var itemVenda = new ItensVendaModel
-					{
-						Id_Venda = venda.Id,
-						Id_Produto = produtoId,
-						Quantidade_Produto = quantidade,
-						Preco_Produto = precoUnitario
-					};
-
-					_context.Itens_Venda.Add(itemVenda);
+					CarregarCombos();
+					return View(venda);
 				}
+
+				produto.Quantidade_Estoque -= quantidade;
+
+				var precoUnitario = produto.Preco_Unitario ?? 0;
+				totalVenda += precoUnitario * quantidade;
+
+				var itemVenda = new ItensVendaModel
+				{
+					Id_Venda = venda.Id,
+					Id_Produto = produtoId,
+					Quantidade_Produto = quantidade,
+					Preco_Produto = precoUnitario
+				};
+
+				_context.Itens_Venda.Add(itemVenda);
+				_context.Produto.Update(produto);
 			}
 
 			venda.Total = totalVenda;
+
 			_context.SaveChanges();
 
 			return RedirectToAction("Index");
+		}
+
+		private void CarregarCombos()
+		{
+			ViewBag.Clientes = _context.Cliente.OrderBy(c => c.Nome).ToList();
+			ViewBag.Produtos = _context.Produto.OrderBy(p => p.Nome).ToList();
 		}
 	}
 }

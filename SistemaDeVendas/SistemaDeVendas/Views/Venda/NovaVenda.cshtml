@@ -8,6 +8,16 @@
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">Nova venda</h1>
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var erro in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@erro.ErrorMessage</div>
+            }
+        </div>
+    }
+
     <form asp-action="NovaVenda" method="post" id="formVenda">
 
         <div class="form-group">
