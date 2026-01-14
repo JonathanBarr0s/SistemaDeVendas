@@ -1,134 +1,143 @@
-# Sistema de Vendas
+<div align="right">
 
-## 1. Descrição
+![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet)
+![ASP.NET MVC](https://img.shields.io/badge/ASP.NET-MVC-blue)
+![EF Core](https://img.shields.io/badge/EF%20Core-9.0-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Docker](https://img.shields.io/badge/docker-ready-blue)
+![API Status](https://img.shields.io/badge/status-online-success)
 
-O **Sistema de Vendas** é um projeto desenvolvido em **C# com ASP.NET MVC**, com o objetivo de gerenciar vendas, clientes, produtos e vendedores.
+</div>
 
-Principais funcionalidades:
+<h1 align="center">Sistema de Vendas</h1>
 
-* **Gerenciamento de Vendedores:** Cadastro, login e associação de vendas a um vendedor específico.
-* **Gestão de Clientes:** Registro e atualização de informações de clientes.
-* **Controle de Produtos:** Cadastro, edição e exclusão de produtos disponíveis para venda.
-* **Registro de Vendas:** Associação de clientes, vendedores e produtos em uma venda.
-* **Autenticação e Sessão:** Controle de acesso de vendedores, incluindo armazenamento de sessão.
-* **Relatórios Básicos:** Visualização das vendas registradas, com informações detalhadas.
+## Descrição Geral
 
-**Status do Projeto:** Em andamento — funcionando, mas com espaço para melhorias e novas funcionalidades.
+O projeto **Sistema de Vendas** é uma **aplicação web desenvolvida em ASP.NET Core MVC**, criada para gerenciar **clientes, vendedores, produtos e vendas**, simulando um sistema real de controle comercial.
 
----
+A aplicação possui **interface web (Views)**, autenticação por sessão, controle de acesso via middleware e funcionalidades completas de **cadastro, listagem, edição, exclusão e relatórios de vendas**.
 
-## 2. Objetivo
+🐳 **Docker Image: https://hub.docker.com/r/jonathanbarr0s/sistema-de-vendas**
 
-Este projeto tem como principais objetivos:
+🔗 **Acesse a API: https://sistemadevendas.onrender.com**
 
-* Consolidar conhecimentos em **C# e ASP.NET MVC**;
-* Desenvolver um sistema completo que una **backend, frontend e persistência de dados**;
-* Simular cenários reais de uma aplicação de vendas;
-* Criar uma base sólida para futuras melhorias, como relatórios avançados, dashboards e integração com bancos de dados mais robustos.
-
-### 2.1 Tecnologias e Conceitos Utilizados
-
-1. **C# e ASP.NET MVC**: Estruturação do projeto em camadas (Models, Views e Controllers).
-2. **Razor Views**: Renderização de páginas dinâmicas.
-3. **Sessions em ASP.NET**: Para controle de autenticação e dados do usuário logado.
-4. **Validações de Formulário**: Garantia de integridade nos dados inseridos.
-5. **Entity Framework / LINQ**
-6. **Microsoft SQL Server**
-
-### 2.2 Estrutura do Banco de Dados
-
-O banco foi modelado manualmente através de scripts SQL.
-
-**Tabelas criadas:**
-
-* **Cliente** (Id, Nome, CPF/CNPJ, Email, Senha)
-* **Vendedor** (Id, Nome, Email, Senha)
-* **Produto** (Id, Nome, Descrição, Preço, Quantidade em Estoque, Unidade de Medida, Link da Foto)
-* **Venda** (Id, Data, Total, Id_Vendedor, Id_Cliente)
-* **Itens_Venda** (Id_Venda, Id_Produto, Quantidade, Preço)
-
-### 2.3 Boas Práticas Aplicadas
-
-* Separação de responsabilidades (MVC).
-* Criação de **models bem estruturados** para representar entidades.
-* **Validações cruzadas** para garantir consistência nos registros de vendas.
+###### ⚠️ *Nota: Esta API pode levar até 50 segundos para inicializar na primeira requisição. Isso ocorre porque ela está hospedada no plano gratuito do Render, que hiberna a aplicação quando fica inativa.*
 
 ---
 
-## 3. Instalação e Execução
+<br>
 
-Para rodar o projeto localmente:
+## Sumário
 
-1. **Clone o repositório:**
+- [Tecnologias Utilizadas](#1-tecnologias-utilizadas)
+- [Visão Geral da Arquitetura](#2-visão-geral-da-arquitetura)
+- [Funcionalidades do Sistema](#3-funcionalidades-do-sistema)
+- [Como Rodar](#4-como-rodar)
+- [Acompanhe Meu Trabalho](#5-acompanhe-meu-trabalho)
 
-   ```bash
-   git clone https://github.com/JonathanBarr0s/SistemaDeVendas
-   ```
+<br>
 
-2. **Abra no Visual Studio:**
-   É recomendado o uso do **Visual Studio 2022** para compilar e executar o projeto.
+## 1. Tecnologias Utilizadas
 
-3. **Crie o banco de dados no SQL Server:**
+- ASP.NET Core MVC (.NET 8)
+- Entity Framework Core
+- Bootstrap
+- PostgreSQL
+- FluentValidation
+- Docker
 
-   * Execute o script SQL disponível em `/Scripts/Script_Banco` para criar todas as tabelas.
+<br>
 
-4. **Configure a connectionString:**
-   Ajuste no `appsettings.json` para apontar para sua instância do SQL Server.
+## 2. Visão Geral da Arquitetura
 
-5. **Execute o projeto:**
-   Basta iniciar a aplicação.
+O projeto segue o padrão **MVC (Model-View-Controller)**, separando responsabilidades de forma clara:
 
----
+- **Models**: Representam as entidades do sistema e o mapeamento com o banco de dados.
+- **Controllers**: Responsáveis pelo fluxo da aplicação, regras de negócio e interação com as Views.
+- **Views**: Interface web do sistema, permitindo interação do usuário.
+- **Services**: Camada responsável por validações e regras específicas de negócio.
+- **Middleware**: Controle de autenticação e acesso às rotas protegidas.
+- **Data**: Contexto do banco de dados utilizando Entity Framework Core.
 
-## 4. Telas do Sistema
+<br>
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c0f0016c-4321-4d23-9c47-21b53862e720" alt="Tela de Login" width="900"/>
-  <br>
-  <em>Tela de Login</em>
-</p>
+## 3. Funcionalidades do Sistema
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/352feeea-7c3b-420e-bc86-5a5b3cd7a300" alt="Tela de Vendas" width="900"/>
-  <br>
-  <em>Tela de Vendas</em>
-</p>
+### 3.1 Autenticação
+- Login de vendedores
+- Controle de sessão
+- Middleware que protege rotas autenticadas
+- Logout
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/385c2d7c-6ac2-47b8-915b-3abf27fe57b2" alt="Tela de Nova Venda" width="900"/>
-  <br>
-  <em>Tela de Nova Venda</em>
-</p>
+### 3.2 Clientes, Vendedores e Produtos
+- Cadastro, edição e exclusão
+- Pesquisa por filtro
+- Validações customizadas
+- Listagem paginada
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/e53871a5-4da9-4c12-a567-cc9b410ce951" alt="Tela de Produtos" width="900"/>
-  <br>
-  <em>Tela de Produtos</em>
-</p>
+### 3.3 Vendas
+- Registro de vendas com múltiplos produtos
+- Associação com cliente e vendedor
+- Filtro por período
+- Listagem paginada
+- Visualização detalhada da venda
 
----
+<br>
 
-## 5. Próximos Passos / Melhorias Futuras
+## 4. Como Rodar
 
-* Implementar **autenticação por JWT** para transformar em uma API consumível por front-ends.
-* Criar um **dashboard com gráficos de vendas**.
-* Adicionar exportação de relatórios em **PDF e Excel**.
-* Criar testes automatizados.
-* Adotar **Docker** para facilitar o deploy em diferentes ambientes.
+A API pode ser executada de diferentes maneiras dependendo do seu ambiente. Abaixo estão as três formas recomendadas:
 
----
+### 4.1 Render (online, já hospedado)
 
-## 6. Contribuição
+A maneira mais simples é acessar a API diretamente no ambiente publicado:
 
-Contribuições são bem-vindas! Para sugerir melhorias:
+🔗 **API rodando no Render:** *https://sistemadevendas.onrender.com*
 
-1. Faça um fork do repositório;
-2. Crie uma branch: `git checkout -b minha-branch`;
-3. Faça suas alterações e commit: `git commit -m "Minha melhoria"`;
-4. Envie um Pull Request.
+###### ⚠️ *Nota: Esta API pode levar até 50 segundos para inicializar na primeira requisição. Isso ocorre porque ela está hospedada no plano gratuito do Render, que hiberna a aplicação quando fica inativa.*
 
----
+### 4.2 Rodar com Docker (localmente)
 
-## Licença
+Para rodar a API dentro de containers Docker, basta seguir os passos:
 
-Este projeto não possui licença específica.
+1. Baixe deste repositório **somente** o arquivo `docker-compose.yml`, que está na branch **docker**.
+2. Suba a API e o banco Postgres com Docker Compose executando o comando abaixo no PowerShell, no mesmo diretório do arquivo `docker-compose.yml` que você baixou:
+
+```bash
+docker compose up -d
+```
+
+O Compose irá:
+
+- Baixar a imagem da API do Docker Hub.
+- Criar o container do Postgres.
+- Subir os dois containers conectados em uma rede interna.
+- Aplicar automaticamente as migrations do banco.
+
+3. Acesse a API pela URL: *[http://localhost:8080/Login](http://localhost:8080/Login)*
+
+###### *Nota: não é necessário ter Visual Studio ou PostgreSQL local instalado.*
+
+### 4.3 Rodar via Visual Studio (modo desenvolvedor)
+
+#### **Pré-requisitos recomendados**
+
+* .NET 8 SDK.
+* Visual Studio 2026.
+* PostgreSQL.
+
+#### **Passo a passo**
+
+1. Abra a solução `SistemaDeVendas.slnx`.
+2. Garanta que a connection string do *appsettings.Development.json* aponte para um banco local.
+3. Pressione **F5** para rodar. Na primeira execução, o Entity Framework executará automaticamente todas as migrations, criando todo o banco de dados estruturado.
+4. Acesse a API pela URL: *[https://localhost:8443/Login](https://localhost:8443/Login)*
+
+<br>
+
+## 5. Acompanhe Meu Trabalho
+
+Me encontre em outras redes:
+
+- **Docker Hub:** [hub.docker.com/u/jonathanbarr0s](https://hub.docker.com/u/jonathanbarr0s)
+- **LinkedIn:** [linkedin.com/in/jonathansbarros/](https://www.linkedin.com/in/jonathansbarros/)
